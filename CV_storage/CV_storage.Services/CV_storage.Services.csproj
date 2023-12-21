@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CV_storage.Core\CV_storage.Core.csproj" />
+    <ProjectReference Include="..\CV_storage.Data\CV_storage.Data.csproj" />
+  </ItemGroup>
+
+</Project>
