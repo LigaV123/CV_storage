@@ -1,7 +1,7 @@
 ﻿@model CvItemViewModel
 
 @{
-    ViewBag.Title = $"Edit {Model.Name} CV";
+    ViewBag.Title = $"Edit {Model.FirstName} {Model.LastName} CV";
     Layout = "_Layout";
 }
 
@@ -10,13 +10,30 @@
 @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
 {
     @Html.HiddenFor(m => m.Id)
-    <div class="mb-3">
-        @Html.LabelFor(m => m.Name, "Name")
-        @Html.TextBoxFor(m => m.Name, new { @class = "form-control"})
+    <div class="col-md-4">
+        <div class="mb-3">
+            @Html.LabelFor(m => m.FirstName, "First Name")
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control"})
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.MiddleName, "Middle Name")
+            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control"})
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.LastName, "Last Name")
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control"})
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Email, "E-mail")
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control"})
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.PhoneNumber, "Phone Number")
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control"})
+        </div>
     </div>
-    <div class="mb-3">
-        @Html.LabelFor(m => m.Email, "E-mail")
-        @Html.TextBoxFor(m => m.Email, new { @class = "form-control"})
+    <button type="submit" class="btn btn-primary mb-3">Update</button>
+    <div>
+        <a asp-action="Index">Back to List</a>
     </div>
-    <button type="submit" class="btn btn-primary">Update</button>
 }

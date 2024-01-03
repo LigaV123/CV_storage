@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using CV_storage.Core.Models;
 using CV_storage.Core.Services;
+using Microsoft.AspNetCore.Mvc.ActionConstraints;
 
 namespace CV_storage_app.Controllers
 {
@@ -25,8 +26,10 @@ namespace CV_storage_app.Controllers
             cvList.CvItems = cvs.Select(cv => new CvItemViewModel()
             {
                 Id = cv.Id,
-                Name = cv.FirstName,
-                Email = cv.Email
+                FirstName = cv.FirstName,
+                LastName = cv.LastName,
+                Email = cv.Email,
+                PhoneNumber = cv.PhoneNumber
             }).ToList();
 
             return View(cvList);
@@ -53,8 +56,11 @@ namespace CV_storage_app.Controllers
                 var model = new CvItemViewModel
                 {
                     Id = cv.Id,
-                    Name = cv.FirstName,
-                    Email = cv.Email
+                    FirstName = cv.FirstName,
+                    MiddleName = cv.MiddleName,
+                    LastName = cv.LastName,
+                    Email = cv.Email,
+                    PhoneNumber = cv.PhoneNumber
                 };
 
                 return View(model);
@@ -69,13 +75,37 @@ namespace CV_storage_app.Controllers
             var existingCv = _cvService.GetById(cv.Id);
             if (existingCv != null)
             {
-                existingCv.FirstName = cv.Name;
+                existingCv.FirstName = cv.FirstName;
+                existingCv.MiddleName = cv.MiddleName;
+                existingCv.LastName = cv.LastName;
                 existingCv.Email = cv.Email;
+                existingCv.PhoneNumber = cv.PhoneNumber;
 
                 _cvService.Update(existingCv);
             }
 
-            return View("Index");
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(CvItemViewModel cv)
+        {
+            _cvService.Create(new CurriculumVitae
+            {
+                FirstName = cv.FirstName,
+                MiddleName = cv.MiddleName,
+                LastName = cv.LastName,
+                Email = cv.Email,
+                PhoneNumber = cv.PhoneNumber
+            });
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

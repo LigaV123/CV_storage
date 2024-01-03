@@ -18,5 +18,7 @@ namespace CV_storage.Core.Models
 
         [MaxLength(12)]
         public string? PhoneNumber { get; set; }
+
+        public ICollection<LanguageKnowledge> LanguageKnowledges { get; set; }  = new List<LanguageKnowledge>();
     }
 }
