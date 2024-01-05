@@ -8,5 +8,7 @@
         public string? LastName { get; set; }
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
+
+        public List<LanguageKnowledgeViewModel> LanguageKnowledge { get; set; } = new List<LanguageKnowledgeViewModel>();
     }
 }

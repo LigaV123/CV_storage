@@ -5,6 +5,7 @@ using System.Diagnostics;
 using CV_storage.Core.Models;
 using CV_storage.Core.Services;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
+using Microsoft.EntityFrameworkCore;
 
 namespace CV_storage_app.Controllers
 {
@@ -21,7 +22,7 @@ namespace CV_storage_app.Controllers
 
         public IActionResult Index()
         {
-            var cvs = _cvService.Get();
+            var cvs = _cvService.Query().Include(cv => cv.LanguageKnowledges).ToList();
             var cvList = new CvListViewModel();
             cvList.CvItems = cvs.Select(cv => new CvItemViewModel()
             {
@@ -29,7 +30,14 @@ namespace CV_storage_app.Controllers
                 FirstName = cv.FirstName,
                 LastName = cv.LastName,
                 Email = cv.Email,
-                PhoneNumber = cv.PhoneNumber
+                PhoneNumber = cv.PhoneNumber,
+                LanguageKnowledge = cv.LanguageKnowledges.Select(l => new LanguageKnowledgeViewModel
+                {
+                    CurriculumVitaeId = cv.Id,
+                    Id = l.Id,
+                    Language = l.Language,
+                    LanguageLevel = l.LanguageLevel
+                }).ToList()
             }).ToList();
 
             return View(cvList);
@@ -50,7 +58,8 @@ namespace CV_storage_app.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var cv = _cvService.GetById(id);
+            var cv = _cvService.QueryById(id)
+                .Include(cv => cv.LanguageKnowledges).SingleOrDefault();
             if (cv != null)
             {
                 var model = new CvItemViewModel
@@ -60,7 +69,14 @@ namespace CV_storage_app.Controllers
                     MiddleName = cv.MiddleName,
                     LastName = cv.LastName,
                     Email = cv.Email,
-                    PhoneNumber = cv.PhoneNumber
+                    PhoneNumber = cv.PhoneNumber,
+                    LanguageKnowledge = cv.LanguageKnowledges.Select(l => new LanguageKnowledgeViewModel
+                    {
+                        CurriculumVitaeId = cv.Id,
+                        Id = l.Id,
+                        Language = l.Language,
+                        LanguageLevel = l.LanguageLevel
+                    }).ToList()
                 };
 
                 return View(model);
@@ -72,7 +88,8 @@ namespace CV_storage_app.Controllers
         [HttpPost]
         public IActionResult Edit(CvItemViewModel cv)
         {
-            var existingCv = _cvService.GetById(cv.Id);
+            var existingCv = _cvService.QueryById(cv.Id)
+                .Include(c => c.LanguageKnowledges).SingleOrDefault();
             if (existingCv != null)
             {
                 existingCv.FirstName = cv.FirstName;
@@ -81,10 +98,28 @@ namespace CV_storage_app.Controllers
                 existingCv.Email = cv.Email;
                 existingCv.PhoneNumber = cv.PhoneNumber;
 
+                var existingCvLanguageList = existingCv.LanguageKnowledges.ToList();
+                for (var i = 0; i < cv.LanguageKnowledge.Count; i++)
+                {
+                   existingCvLanguageList[i].Language = cv.LanguageKnowledge[i].Language;
+                   existingCvLanguageList[i].LanguageLevel = cv.LanguageKnowledge[i].LanguageLevel;
+                }
+
                 _cvService.Update(existingCv);
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult AddLanguageSectionItem(int itemCount)
+        {
+            var model = new CvItemViewModel
+            {
+                LanguageKnowledge = Enumerable.Repeat(new LanguageKnowledgeViewModel(), itemCount + 1).ToList()
+            };
+
+            return PartialView(model);
         }
 
         [HttpGet]

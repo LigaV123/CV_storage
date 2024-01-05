@@ -1,10 +1,11 @@
-﻿@model CvItemViewModel
+﻿@using CV_storage.Core.Enums
+@using Microsoft.CodeAnalysis.Scripting
+@model CvItemViewModel
 
 @{
     ViewBag.Title = $"Edit {Model.FirstName} {Model.LastName} CV";
     Layout = "_Layout";
 }
-
 
 <h2>Edit</h2>
 @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
@@ -31,9 +32,45 @@
             @Html.LabelFor(m => m.PhoneNumber, "Phone Number")
             @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control"})
         </div>
+
+        <div id="language-section">
+            @for (var i = 0; i < Model.LanguageKnowledge.Count; i++)
+            {
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.LanguageKnowledge[i].Language, "Language")
+                    @Html.TextBoxFor(m => m.LanguageKnowledge[i].Language, new { @class = "form-control"})
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.LanguageKnowledge, "Language knowledge level")
+                    <select asp-for="@Model.LanguageKnowledge[i].LanguageLevel" asp-items="Html.GetEnumSelectList<KnowledgeLevel>()">
+                        <option value="">Please select</option>
+                    </Select>
+                </div>
+            }
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary mb-3">Update</button>
+
+    <div class="btn-group" role="group">
+        <button id="add-language-item" type="button" class="btn btn-success mb-3">Add language</button>
+        <button type="submit" class="btn btn-primary mb-3">Update</button>
+    </div>
+
     <div>
         <a asp-action="Index">Back to List</a>
     </div>
+}
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function(){
+            $("#add-language-item").on("click", function(){
+                const itemCount = $('#language-section').find("div.mb-3").length / 2;
+
+                $.get(`AddLanguageSectionItem?itemCount=${itemCount}`, function (data, status){
+                    $('#language-section').append(data);
+                })
+            })
+        })
+    </script>
 }
