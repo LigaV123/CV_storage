@@ -8,6 +8,7 @@
 }
 
 <h2>Edit</h2>
+@Html.ValidationSummary(htmlAttributes:new { @class = "alert alert-danger", role = "alert"}, message: "Things you must do:")
 @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
 {
     @Html.HiddenFor(m => m.Id)
@@ -36,6 +37,7 @@
         <div id="language-section">
             @for (var i = 0; i < Model.LanguageKnowledge.Count; i++)
             {
+                @Html.HiddenFor(m => m.LanguageKnowledge[i].Id)
                 <div class="mb-3">
                     @Html.LabelFor(m => m.LanguageKnowledge[i].Language, "Language")
                     @Html.TextBoxFor(m => m.LanguageKnowledge[i].Language, new { @class = "form-control"})
@@ -45,6 +47,7 @@
                     <select asp-for="@Model.LanguageKnowledge[i].LanguageLevel" asp-items="Html.GetEnumSelectList<KnowledgeLevel>()">
                         <option value="">Please select</option>
                     </Select>
+                    <button type="button" id="@Model.LanguageKnowledge[i].Id" class="btn btn-danger delete-language">Remove</button>
                 </div>
             }
         </div>
@@ -69,6 +72,14 @@
 
                 $.get(`AddLanguageSectionItem?itemCount=${itemCount}`, function (data, status){
                     $('#language-section').append(data);
+                })
+            })
+
+            $(".delete-language").on("click", function(){
+                const id = $(this).attr("id");
+
+                $.post("DeleteLanguageItem", { "id" : id }, function(data, status){
+                    window.location.reload();
                 })
             })
         })

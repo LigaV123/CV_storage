@@ -20,6 +20,7 @@ namespace CV_storage_app
             );
             builder.Services.AddTransient<IDbService, DbService>();
             builder.Services.AddTransient<IEntityService<CurriculumVitae>, EntityService<CurriculumVitae>>();
+            builder.Services.AddTransient<IEntityService<LanguageKnowledge>, EntityService<LanguageKnowledge>>();
 
             var app = builder.Build();
 

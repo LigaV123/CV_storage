@@ -13,11 +13,15 @@ namespace CV_storage_app.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IEntityService<CurriculumVitae> _cvService;
+        private readonly IEntityService<LanguageKnowledge> _languageService;
 
-        public HomeController(ILogger<HomeController> logger, IEntityService<CurriculumVitae> cvService)
+        public HomeController(ILogger<HomeController> logger, 
+            IEntityService<CurriculumVitae> cvService, 
+            IEntityService<LanguageKnowledge> languageService)
         {
             _logger = logger;
             _cvService = cvService;
+            _languageService = languageService;
         }
 
         public IActionResult Index()
@@ -90,6 +94,24 @@ namespace CV_storage_app.Controllers
         {
             var existingCv = _cvService.QueryById(cv.Id)
                 .Include(c => c.LanguageKnowledges).SingleOrDefault();
+
+            var duplicateLanguages = cv.LanguageKnowledge
+                .Where(l => cv.LanguageKnowledge
+                    .Count(ll => ll.Language.ToLowerInvariant() == l.Language.ToLowerInvariant()) > 1).ToList();
+
+            if (!ModelState.IsValid)
+            {
+                return View(cv);
+            }
+
+            if (duplicateLanguages.Count > 0)
+            {
+                string errorMessage = $"{duplicateLanguages[0].Language} language already exists.";
+                ModelState.AddModelError("error", errorMessage);
+
+                return View(cv);
+            }
+            
             if (existingCv != null)
             {
                 existingCv.FirstName = cv.FirstName;
@@ -97,13 +119,13 @@ namespace CV_storage_app.Controllers
                 existingCv.LastName = cv.LastName;
                 existingCv.Email = cv.Email;
                 existingCv.PhoneNumber = cv.PhoneNumber;
-
-                var existingCvLanguageList = existingCv.LanguageKnowledges.ToList();
-                for (var i = 0; i < cv.LanguageKnowledge.Count; i++)
+                existingCv.LanguageKnowledges = cv.LanguageKnowledge.Select(l => new LanguageKnowledge
                 {
-                   existingCvLanguageList[i].Language = cv.LanguageKnowledge[i].Language;
-                   existingCvLanguageList[i].LanguageLevel = cv.LanguageKnowledge[i].LanguageLevel;
-                }
+                    CurriculumVitaeId = cv.Id,
+                    Id = l.Id,
+                    Language = l.Language,
+                    LanguageLevel = l.LanguageLevel
+                }).ToList();
 
                 _cvService.Update(existingCv);
             }
@@ -120,6 +142,19 @@ namespace CV_storage_app.Controllers
             };
 
             return PartialView(model);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteLanguageItem(int id)
+        {
+            var language = _languageService.GetById(id);
+           
+            if (language != null)
+            {
+                _languageService.Delete(language);
+            }
+
+            return Ok();
         }
 
         [HttpGet]
