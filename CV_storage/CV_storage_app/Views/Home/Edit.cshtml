@@ -8,7 +8,10 @@
 }
 
 <h2>Edit</h2>
-@Html.ValidationSummary(htmlAttributes:new { @class = "alert alert-danger", role = "alert"}, message: "Things you must do:")
+@{
+    string display = @ViewData.ModelState.IsValid ? "none" : "block";
+}
+@Html.ValidationSummary(htmlAttributes:new { @class = "alert alert-danger", style=$"display:{display}"}, message: "Things you must do:")
 @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
 {
     @Html.HiddenFor(m => m.Id)
@@ -75,7 +78,7 @@
                 })
             })
 
-            $(".delete-language").on("click", function(){
+            $("#language-section").on("click", ".delete-language", function(){
                 const id = $(this).attr("id");
 
                 $.post("DeleteLanguageItem", { "id" : id }, function(data, status){

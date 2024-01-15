@@ -2,6 +2,7 @@
 using CV_storage_app.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using AutoMapper;
 using CV_storage.Core.Models;
 using CV_storage.Core.Services;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
@@ -14,35 +15,29 @@ namespace CV_storage_app.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IEntityService<CurriculumVitae> _cvService;
         private readonly IEntityService<LanguageKnowledge> _languageService;
+        private readonly IMapper _mapper;
+        private readonly CvEditValidations _validations;
 
         public HomeController(ILogger<HomeController> logger, 
             IEntityService<CurriculumVitae> cvService, 
-            IEntityService<LanguageKnowledge> languageService)
+            IEntityService<LanguageKnowledge> languageService, 
+            IMapper mapper, 
+            CvEditValidations editValidations)
         {
             _logger = logger;
             _cvService = cvService;
             _languageService = languageService;
+            _mapper = mapper;
+            _validations = editValidations;
         }
 
         public IActionResult Index()
         {
             var cvs = _cvService.Query().Include(cv => cv.LanguageKnowledges).ToList();
-            var cvList = new CvListViewModel();
-            cvList.CvItems = cvs.Select(cv => new CvItemViewModel()
+            var cvList = new CvListViewModel
             {
-                Id = cv.Id,
-                FirstName = cv.FirstName,
-                LastName = cv.LastName,
-                Email = cv.Email,
-                PhoneNumber = cv.PhoneNumber,
-                LanguageKnowledge = cv.LanguageKnowledges.Select(l => new LanguageKnowledgeViewModel
-                {
-                    CurriculumVitaeId = cv.Id,
-                    Id = l.Id,
-                    Language = l.Language,
-                    LanguageLevel = l.LanguageLevel
-                }).ToList()
-            }).ToList();
+                CvItems = cvs.Select(_mapper.Map<CvItemViewModel>).ToList()
+            };
 
             return View(cvList);
         }
@@ -66,24 +61,7 @@ namespace CV_storage_app.Controllers
                 .Include(cv => cv.LanguageKnowledges).SingleOrDefault();
             if (cv != null)
             {
-                var model = new CvItemViewModel
-                {
-                    Id = cv.Id,
-                    FirstName = cv.FirstName,
-                    MiddleName = cv.MiddleName,
-                    LastName = cv.LastName,
-                    Email = cv.Email,
-                    PhoneNumber = cv.PhoneNumber,
-                    LanguageKnowledge = cv.LanguageKnowledges.Select(l => new LanguageKnowledgeViewModel
-                    {
-                        CurriculumVitaeId = cv.Id,
-                        Id = l.Id,
-                        Language = l.Language,
-                        LanguageLevel = l.LanguageLevel
-                    }).ToList()
-                };
-
-                return View(model);
+                return View(_mapper.Map<CvItemViewModel>(cv));
             }
             
             return RedirectToAction("Index");
@@ -92,41 +70,16 @@ namespace CV_storage_app.Controllers
         [HttpPost]
         public IActionResult Edit(CvItemViewModel cv)
         {
-            var existingCv = _cvService.QueryById(cv.Id)
-                .Include(c => c.LanguageKnowledges).SingleOrDefault();
-
-            var duplicateLanguages = cv.LanguageKnowledge
-                .Where(l => cv.LanguageKnowledge
-                    .Count(ll => ll.Language.ToLowerInvariant() == l.Language.ToLowerInvariant()) > 1).ToList();
-
-            if (!ModelState.IsValid)
+            if (_validations.IsValid(cv, ModelState))
             {
                 return View(cv);
             }
 
-            if (duplicateLanguages.Count > 0)
-            {
-                string errorMessage = $"{duplicateLanguages[0].Language} language already exists.";
-                ModelState.AddModelError("error", errorMessage);
+            var existingCv = _cvService.GetById(cv.Id);
 
-                return View(cv);
-            }
-            
             if (existingCv != null)
             {
-                existingCv.FirstName = cv.FirstName;
-                existingCv.MiddleName = cv.MiddleName;
-                existingCv.LastName = cv.LastName;
-                existingCv.Email = cv.Email;
-                existingCv.PhoneNumber = cv.PhoneNumber;
-                existingCv.LanguageKnowledges = cv.LanguageKnowledge.Select(l => new LanguageKnowledge
-                {
-                    CurriculumVitaeId = cv.Id,
-                    Id = l.Id,
-                    Language = l.Language,
-                    LanguageLevel = l.LanguageLevel
-                }).ToList();
-
+                _mapper.Map(cv, existingCv);
                 _cvService.Update(existingCv);
             }
 
@@ -166,14 +119,7 @@ namespace CV_storage_app.Controllers
         [HttpPost]
         public IActionResult Create(CvItemViewModel cv)
         {
-            _cvService.Create(new CurriculumVitae
-            {
-                FirstName = cv.FirstName,
-                MiddleName = cv.MiddleName,
-                LastName = cv.LastName,
-                Email = cv.Email,
-                PhoneNumber = cv.PhoneNumber
-            });
+            _cvService.Create(_mapper.Map<CurriculumVitae>(cv));
 
             return RedirectToAction("Index");
         }
