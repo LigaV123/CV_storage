@@ -1,6 +1,4 @@
-﻿@using CV_storage.Core.Enums
-@using Microsoft.CodeAnalysis.Scripting
-@model CvItemViewModel
+﻿@model CvItemViewModel
 
 @{
     ViewBag.Title = $"Edit {Model.FirstName} {Model.LastName} CV";
@@ -8,52 +6,11 @@
 }
 
 <h2>Edit</h2>
-@{
-    string display = @ViewData.ModelState.IsValid ? "none" : "block";
-}
-@Html.ValidationSummary(htmlAttributes:new { @class = "alert alert-danger", style=$"display:{display}"}, message: "Things you must do:")
 @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
 {
-    @Html.HiddenFor(m => m.Id)
     <div class="col-md-4">
-        <div class="mb-3">
-            @Html.LabelFor(m => m.FirstName, "First Name")
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control"})
-        </div>
-        <div class="mb-3">
-            @Html.LabelFor(m => m.MiddleName, "Middle Name")
-            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control"})
-        </div>
-        <div class="mb-3">
-            @Html.LabelFor(m => m.LastName, "Last Name")
-            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control"})
-        </div>
-        <div class="mb-3">
-            @Html.LabelFor(m => m.Email, "E-mail")
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control"})
-        </div>
-        <div class="mb-3">
-            @Html.LabelFor(m => m.PhoneNumber, "Phone Number")
-            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control"})
-        </div>
-
-        <div id="language-section">
-            @for (var i = 0; i < Model.LanguageKnowledge.Count; i++)
-            {
-                @Html.HiddenFor(m => m.LanguageKnowledge[i].Id)
-                <div class="mb-3">
-                    @Html.LabelFor(m => m.LanguageKnowledge[i].Language, "Language")
-                    @Html.TextBoxFor(m => m.LanguageKnowledge[i].Language, new { @class = "form-control"})
-                </div>
-                <div class="mb-3">
-                    @Html.LabelFor(m => m.LanguageKnowledge, "Language knowledge level")
-                    <select asp-for="@Model.LanguageKnowledge[i].LanguageLevel" asp-items="Html.GetEnumSelectList<KnowledgeLevel>()">
-                        <option value="">Please select</option>
-                    </Select>
-                    <button type="button" id="@Model.LanguageKnowledge[i].Id" class="btn btn-danger delete-language">Remove</button>
-                </div>
-            }
-        </div>
+        @Html.EditorFor(m => m, "CvEdit")
+        @Html.EditorFor(m => m.LanguageKnowledge, "LanguageListEdit")
     </div>
 
     <div class="btn-group" role="group">
@@ -73,7 +30,7 @@
             $("#add-language-item").on("click", function(){
                 const itemCount = $('#language-section').find("div.mb-3").length / 2;
 
-                $.get(`AddLanguageSectionItem?itemCount=${itemCount}`, function (data, status){
+                $.get(`/Language/AddLanguageSectionItem?itemCount=${itemCount}`, function (data, status){
                     $('#language-section').append(data);
                 })
             })
@@ -81,7 +38,7 @@
             $("#language-section").on("click", ".delete-language", function(){
                 const id = $(this).attr("id");
 
-                $.post("DeleteLanguageItem", { "id" : id }, function(data, status){
+                $.post("/Language/DeleteLanguageItem", { "id" : id }, function(data, status){
                     window.location.reload();
                 })
             })

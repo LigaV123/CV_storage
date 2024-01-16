@@ -20,5 +20,6 @@ namespace CV_storage.Core.Models
         public string? PhoneNumber { get; set; }
 
         public ICollection<LanguageKnowledge> LanguageKnowledges { get; set; }  = new List<LanguageKnowledge>();
+        public ICollection<Education> Educations { get; set; } = new List<Education>();
     }
 }

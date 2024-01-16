@@ -1,0 +1,20 @@
+﻿@using CV_storage.Core.Enums
+@model List<LanguageKnowledgeViewModel>
+
+<div id="language-section">
+    @for (var i = 0; i < Model.Count; i++)
+    {
+        @Html.HiddenFor(m => m[i].Id)
+        <div class="mb-3">
+            @Html.LabelFor(m => m[i].Language, "Language")
+            @Html.TextBoxFor(m => m[i].Language, new { @class = "form-control"})
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m[i].LanguageLevel, "Language knowledge level")
+            <select asp-for="@Model[i].LanguageLevel" asp-items="Html.GetEnumSelectList<KnowledgeLevel>()">
+                <option value="">Please select</option>
+            </Select>
+            <button type="button" id="@Model[i].Id" class="btn btn-danger delete-language">Remove</button>
+        </div>
+    }
+</div>

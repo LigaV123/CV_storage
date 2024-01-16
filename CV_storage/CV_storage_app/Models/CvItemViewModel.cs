@@ -12,5 +12,6 @@ namespace CV_storage_app.Models
         [Required] public string? PhoneNumber { get; set; }
 
         public List<LanguageKnowledgeViewModel> LanguageKnowledge { get; set; } = new List<LanguageKnowledgeViewModel>();
+        public List<EducationViewModel> Education { get; set; } = new List<EducationViewModel>();
     }
 }
