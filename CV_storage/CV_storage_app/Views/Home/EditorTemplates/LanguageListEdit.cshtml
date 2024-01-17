@@ -14,7 +14,8 @@
             <select asp-for="@Model[i].LanguageLevel" asp-items="Html.GetEnumSelectList<KnowledgeLevel>()">
                 <option value="">Please select</option>
             </Select>
-            <button type="button" id="@Model[i].Id" class="btn btn-danger delete-language">Remove</button>
+            <button type="button" id="@Model[i].Id" class="btn btn-danger delete-language">Remove Language</button>
         </div>
+        <hr />
     }
 </div>

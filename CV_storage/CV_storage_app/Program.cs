@@ -2,6 +2,7 @@ using CV_storage.Core.Models;
 using CV_storage.Core.Services;
 using CV_storage.Data;
 using CV_storage.Services;
+using CV_storage_app.Validations;
 using Microsoft.EntityFrameworkCore;
 
 namespace CV_storage_app

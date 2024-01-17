@@ -1,25 +1,31 @@
-﻿@model CvItemViewModel
+﻿@using CV_storage.Core.Enums
+@model CvItemViewModel
 
 @{
-    ViewBag.Title = $"Edit {Model.FirstName} {Model.LastName} CV";
+    ViewBag.Title = "Edit";
     Layout = "_Layout";
+    string headerPart = $"{Model.FirstName} {Model.LastName}'s";
 }
 
-<h2>Edit</h2>
+<h2>Edit @headerPart CV</h2>
 @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
 {
-    <div class="col-md-4">
+    <div class="col">
+        <h3>Cv Main Information</h3>
         @Html.EditorFor(m => m, "CvEdit")
+
+        <h3>Language Information</h3>
         @Html.EditorFor(m => m.LanguageKnowledge, "LanguageListEdit")
+        <button id="add-language-item" type="button" class="btn btn-success mb-3">Add language</button>
+
+        <h3>Educational Information</h3>
+        @Html.EditorFor(m => m.Education, "EducationEdit")
+        <button id="add-education-item" type="button" class="btn btn-success mb-3">Add Education</button>
     </div>
 
     <div class="btn-group" role="group">
-        <button id="add-language-item" type="button" class="btn btn-success mb-3">Add language</button>
+        <button asp-action="Index" class="btn btn-primary mb-3">Back to List</button>
         <button type="submit" class="btn btn-primary mb-3">Update</button>
-    </div>
-
-    <div>
-        <a asp-action="Index">Back to List</a>
     </div>
 }
 
@@ -39,6 +45,22 @@
                 const id = $(this).attr("id");
 
                 $.post("/Language/DeleteLanguageItem", { "id" : id }, function(data, status){
+                    window.location.reload();
+                })
+            })
+
+            $("#add-education-item").on("click", function () {
+                const itemCount = $('#education-section').find("div.mb-3").length / 8;
+
+                $.get(`/Education/AddEducationSectionItem?itemCount=${itemCount}`, function (data, status) {
+                    $('#education-section').append(data);
+                })
+            })
+
+            $("#education-section").on("click", ".delete-education", function () {
+                const id = $(this).attr("id");
+
+                $.post("/Education/DeleteEducationItem", { "id": id }, function (data, status) {
                     window.location.reload();
                 })
             })

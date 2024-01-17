@@ -23,12 +23,14 @@ namespace CV_storage_app.Controllers
             _logger = logger;
             _cvService = cvService;
             _mapper = mapper;
-            _validations =validations;
+            _validations = validations;
         }
 
         public IActionResult Index()
         {
-            var cvs = _cvService.Query().Include(cv => cv.LanguageKnowledges).ToList();
+            var cvs = _cvService.Query()
+                .Include(cv => cv.LanguageKnowledges)
+                .Include(cv => cv.Educations).ToList();
             var cvList = new CvListViewModel
             {
                 CvItems = cvs.Select(_mapper.Map<CvItemViewModel>).ToList()
@@ -53,7 +55,8 @@ namespace CV_storage_app.Controllers
         public IActionResult Edit(int id)
         {
             var cv = _cvService.QueryById(id)
-                .Include(cv => cv.LanguageKnowledges).SingleOrDefault();
+                .Include(cv => cv.LanguageKnowledges)
+                .Include(cv => cv.Educations).SingleOrDefault();
             if (cv != null)
             {
                 return View(_mapper.Map<CvItemViewModel>(cv));

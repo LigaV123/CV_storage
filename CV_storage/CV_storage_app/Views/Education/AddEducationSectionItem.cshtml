@@ -1,0 +1,49 @@
+﻿@using CV_storage.Core.Enums
+@model CvItemViewModel
+
+@{
+    var lastElement = Model.Education.Count - 1;
+}
+
+<div>
+    @Html.HiddenFor(m => m.Education[lastElement].Id)
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Education[lastElement].EducationalEstablishment, "Educational Establishment")
+        @Html.TextBoxFor(m => m.Education[lastElement].EducationalEstablishment, new { @class = "form-control"})
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Education[lastElement].Faculty, "Faculty")
+        @Html.TextBoxFor(m => m.Education[lastElement].Faculty, new { @class = "form-control"})
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Education[lastElement].Department, "Department")
+        @Html.TextBoxFor(m => m.Education[lastElement].Department, new { @class = "form-control"})
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Education[lastElement].EducationForm, "Education Form")
+        <select asp-for="@Model.Education[lastElement].EducationForm" asp-items="Html.GetEnumSelectList<FormOfEducation>()">
+            <option value="">Please select</option>
+        </Select>
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Education[lastElement].Degree, "Degree Information")
+        <select asp-for="@Model.Education[lastElement].Degree" asp-items="Html.GetEnumSelectList<DegreeInformation>()">
+            <option value="">Please select</option>
+        </Select>
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Education[lastElement].Status, "Education Status")
+        <select asp-for="@Model.Education[lastElement].Status" asp-items="Html.GetEnumSelectList<EducationStatus>()">
+            <option value="">Please select</option>
+        </Select>
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Education[lastElement].EducationStartDate, "Education Start Date")
+        @Html.TextBoxFor(m => m.Education[lastElement].EducationStartDate, new { placeholder = "dd.mm.yy or dd.mm.yyyy", @class = "form-control"})
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Education[lastElement].EducationEndDate, "Education End Date")
+        @Html.TextBoxFor(m => m.Education[lastElement].EducationEndDate, new { placeholder = "dd.mm.yy or dd.mm.yyyy", @class = "form-control"})
+        <button type="button" id="@Model.Education[lastElement].Id" class="btn btn-danger delete-education">Remove Education</button>
+    </div>
+</div>
