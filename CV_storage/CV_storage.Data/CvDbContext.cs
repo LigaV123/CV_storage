@@ -13,5 +13,8 @@ namespace CV_storage.Data
         public DbSet<CurriculumVitae> CurriculumVitae { get; set; }
         public DbSet<LanguageKnowledge> LanguageKnowledge { get; set; }
         public DbSet<Education> Education { get; set; }
+        public DbSet<JobExperience> JobExperience { get; set; }
+        public DbSet<GainedSkill> GainedSkill { get; set; }
+        public DbSet<Address> Address { get; set; }
     }
 }

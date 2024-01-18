@@ -58,6 +58,8 @@ namespace CV_storage_app.Controllers
                 .Include(cv => cv.LanguageKnowledges)
                 .Include(cv => cv.Educations)
                 .Include(cv => cv.MainAddress)
+                .Include(cv => cv.JobExperiences)
+                .Include(cv => cv.GainedSkills)
                 .SingleOrDefault();
             if (cv != null)
             {

@@ -13,11 +13,15 @@ namespace CV_storage_app
                 cfg.CreateMap<CurriculumVitae, CvItemViewModel>()
                     .ForMember(d => d.LanguageKnowledge,
                         opt => opt.MapFrom(cv => cv.LanguageKnowledges))
-                    .ForMember(d => d.Education, opt => opt.MapFrom(cv => cv.Educations));
+                    .ForMember(d => d.Education, opt => opt.MapFrom(cv => cv.Educations))
+                    .ForMember(d => d.JobExperience, opt => opt.MapFrom(cv => cv.JobExperiences))
+                    .ForMember(d => d.GainedSkill, opt => opt.MapFrom(cv => cv.GainedSkills));
                 cfg.CreateMap<CvItemViewModel, CurriculumVitae>()
                     .ForMember(d => d.LanguageKnowledges,
                         opt => opt.MapFrom(cv => cv.LanguageKnowledge))
-                    .ForMember(d => d.Educations, opt => opt.MapFrom(cv => cv.Education));
+                    .ForMember(d => d.Educations, opt => opt.MapFrom(cv => cv.Education))
+                    .ForMember(d => d.JobExperiences, opt => opt.MapFrom(cv => cv.JobExperience))
+                    .ForMember(d => d.GainedSkills, opt => opt.MapFrom(cv => cv.GainedSkill));
 
                 cfg.CreateMap<LanguageKnowledge, LanguageKnowledgeViewModel>();
                 cfg.CreateMap<LanguageKnowledgeViewModel, LanguageKnowledge>()
@@ -29,6 +33,14 @@ namespace CV_storage_app
 
                 cfg.CreateMap<Address, AddressViewModel>();
                 cfg.CreateMap<AddressViewModel, Address>()
+                    .ForMember(d => d.CurriculumVitae, opt => opt.Ignore());
+
+                cfg.CreateMap<JobExperience, JobExperienceViewModel>();
+                cfg.CreateMap<JobExperienceViewModel, JobExperience>()
+                    .ForMember(d => d.CurriculumVitae, opt => opt.Ignore());
+
+                cfg.CreateMap<GainedSkill, GainedSkillViewModel>();
+                cfg.CreateMap<GainedSkillViewModel, GainedSkill>()
                     .ForMember(d => d.CurriculumVitae, opt => opt.Ignore());
             });
 

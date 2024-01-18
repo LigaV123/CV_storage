@@ -14,16 +14,29 @@
         <h3>Cv Main Information</h3>
         @Html.EditorFor(m => m, "CvEdit")
 
-        <h3>Language Information</h3>
-        @Html.EditorFor(m => m.LanguageKnowledge, "LanguageListEdit")
-        <button id="add-language-item" type="button" class="btn btn-success mb-3">Add language</button>
+        <div class="border border-dark border-1 mb-3"></div>
+        <h3>Address Information</h3>
+        @Html.EditorFor(m => m.MainAddress, "AddressEdit")
 
+        <div class="border border-dark border-1 mb-3"></div>
+        <h3>Job Experience</h3>
+        @Html.EditorFor(m => m.JobExperience, "JobExperienceEdit")
+        <button id="add-job-item" type="button" class="btn btn-success mb-3">Add Job Experience</button>
+
+        <div class="border border-dark border-1 mb-3"></div>
+        <h3>Gained Skills</h3>
+        @Html.EditorFor(m => m.GainedSkill, "GainedSkillEdit")
+        <button id="add-skill-item" type="button" class="btn btn-success mb-3">Add Skill</button>
+
+        <div class="border border-dark border-1 mb-3"></div>
         <h3>Educational Information</h3>
         @Html.EditorFor(m => m.Education, "EducationEdit")
         <button id="add-education-item" type="button" class="btn btn-success mb-3">Add Education</button>
-        
-        <h3>Address Information</h3>
-        @Html.EditorFor(m => m.MainAddress, "AddressEdit")
+
+        <div class="border border-dark border-1 mb-3"></div>
+        <h3>Language Information</h3>
+        @Html.EditorFor(m => m.LanguageKnowledge, "LanguageListEdit")
+        <button id="add-language-item" type="button" class="btn btn-success mb-3">Add language</button>
     </div>
 
     <div class="btn-group" role="group">
@@ -36,6 +49,7 @@
 {
     <script>
         $(document).ready(function(){
+            //language
             $("#add-language-item").on("click", function(){
                 const itemCount = $('#language-section').find("div.mb-3").length / 2;
 
@@ -52,6 +66,7 @@
                 })
             })
 
+            //education
             $("#add-education-item").on("click", function () {
                 const itemCount = $('#education-section').find("div.mb-3").length / 8;
 
@@ -64,6 +79,40 @@
                 const id = $(this).attr("id");
 
                 $.post("/Education/DeleteEducationItem", { "id": id }, function (data, status) {
+                    window.location.reload();
+                })
+            })
+
+            //job experience
+            $("#add-job-item").on("click", function () {
+                const itemCount = $('#job-section').find("div.mb-3").length / 6;
+
+                $.get(`/JobExperience/AddJobExperienceSectionItem?itemCount=${itemCount}`, function (data, status) {
+                    $('#job-section').append(data);
+                })
+            })
+
+            $("#job-section").on("click", ".delete-job", function () {
+                const id = $(this).attr("id");
+
+                $.post("/JobExperience/DeleteJobExperienceItem", { "id": id }, function (data, status) {
+                    window.location.reload();
+                })
+            })
+
+            //gained skill
+            $("#add-skill-item").on("click", function () {
+                const itemCount = $('#skill-section').find("div.mb-3").length / 3;
+
+                $.get(`/GainedSkill/AddGainedSkillSectionItem?itemCount=${itemCount}`, function (data, status) {
+                    $('#skill-section').append(data);
+                })
+            })
+
+            $("#skill-section").on("click", ".delete-skill", function () {
+                const id = $(this).attr("id");
+
+                $.post("/GainedSkill/DeleteGainedSkillItem", { "id": id }, function (data, status) {
                     window.location.reload();
                 })
             })

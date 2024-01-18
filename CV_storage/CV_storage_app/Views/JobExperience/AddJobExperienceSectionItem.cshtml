@@ -1,0 +1,38 @@
+﻿@using CV_storage.Core.Enums
+@model CvItemViewModel
+
+@{
+    var lastElement = Model.JobExperience.Count - 1;
+}
+
+<div>
+    @Html.HiddenFor(m => m.JobExperience[lastElement].Id)
+    <div class="mb-3">
+        @Html.LabelFor(m => m.JobExperience[lastElement].CompanyName, "Name of Company")
+        @Html.TextBoxFor(m => m.JobExperience[lastElement].CompanyName, new { @class = "form-control"})
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.JobExperience[lastElement].Position, "Position")
+        @Html.TextBoxFor(m => m.JobExperience[lastElement].Position, new { @class = "form-control"})
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.JobExperience[lastElement].JobDescription, "Describe the Job")
+        @Html.TextBoxFor(m => m.JobExperience[lastElement].JobDescription, new { @class = "form-control"})
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.JobExperience, "Workload")
+        <select asp-for="@Model.JobExperience[lastElement].Workload" asp-items="Html.GetEnumSelectList<AmountOfLabor>()">
+            <option value="">Please select</option>
+        </Select>
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.JobExperience[lastElement].EmploymentStartDate, "Employment Start Date")
+        @Html.TextBoxFor(m => m.JobExperience[lastElement].EmploymentStartDate, new { placeholder = "dd.mm.yy or dd.mm.yyyy", @class = "form-control"})
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.JobExperience[lastElement].EmploymentEndDate, "Employment End Date")
+        @Html.TextBoxFor(m => m.JobExperience[lastElement].EmploymentEndDate, new { placeholder = "dd.mm.yy or dd.mm.yyyy", @class = "form-control"})
+        <button type="button" id="@Model.JobExperience[lastElement].Id" class="btn btn-danger delete-job">Remove Job Experience</button>
+    </div>
+    <hr />
+</div>

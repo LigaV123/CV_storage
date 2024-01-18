@@ -4,7 +4,9 @@ namespace CV_storage.Core.Models
 {
     public class Address : Entity
     {
-        [MaxLength(1024)]
+        //recommended maximum length from microsoft page:
+        // https://learn.microsoft.com/en-us/uwp/api/windows.applicationmodel.contacts.contactaddress.country?view=winrt-22621
+        [MaxLength(1024)] 
         public string? Country { get; set; }
 
         [MaxLength(1024)]
