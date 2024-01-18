@@ -20,19 +20,19 @@
         @Html.TextBoxFor(m => m.Education[lastElement].Department, new { @class = "form-control"})
     </div>
     <div class="mb-3">
-        @Html.LabelFor(m => m.Education[lastElement].EducationForm, "Education Form")
+        @Html.LabelFor(m => m.Education, "Education Form")
         <select asp-for="@Model.Education[lastElement].EducationForm" asp-items="Html.GetEnumSelectList<FormOfEducation>()">
             <option value="">Please select</option>
         </Select>
     </div>
     <div class="mb-3">
-        @Html.LabelFor(m => m.Education[lastElement].Degree, "Degree Information")
+        @Html.LabelFor(m => m.Education, "Degree Information")
         <select asp-for="@Model.Education[lastElement].Degree" asp-items="Html.GetEnumSelectList<DegreeInformation>()">
             <option value="">Please select</option>
         </Select>
     </div>
     <div class="mb-3">
-        @Html.LabelFor(m => m.Education[lastElement].Status, "Education Status")
+        @Html.LabelFor(m => m.Education, "Education Status")
         <select asp-for="@Model.Education[lastElement].Status" asp-items="Html.GetEnumSelectList<EducationStatus>()">
             <option value="">Please select</option>
         </Select>

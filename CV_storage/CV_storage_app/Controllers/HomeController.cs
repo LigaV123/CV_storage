@@ -56,7 +56,9 @@ namespace CV_storage_app.Controllers
         {
             var cv = _cvService.QueryById(id)
                 .Include(cv => cv.LanguageKnowledges)
-                .Include(cv => cv.Educations).SingleOrDefault();
+                .Include(cv => cv.Educations)
+                .Include(cv => cv.MainAddress)
+                .SingleOrDefault();
             if (cv != null)
             {
                 return View(_mapper.Map<CvItemViewModel>(cv));

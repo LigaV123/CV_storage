@@ -26,6 +26,10 @@ namespace CV_storage_app
                 cfg.CreateMap<Education, EducationViewModel>();
                 cfg.CreateMap<EducationViewModel, Education>()
                     .ForMember(d => d.CurriculumVitae, opt => opt.Ignore());
+
+                cfg.CreateMap<Address, AddressViewModel>();
+                cfg.CreateMap<AddressViewModel, Address>()
+                    .ForMember(d => d.CurriculumVitae, opt => opt.Ignore());
             });
 
             #if DEBUG

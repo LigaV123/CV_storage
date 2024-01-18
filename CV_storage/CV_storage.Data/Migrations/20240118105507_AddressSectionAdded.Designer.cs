@@ -2,6 +2,7 @@
 using CV_storage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CV_storage.Data.Migrations
 {
     [DbContext(typeof(CvDbContext))]
-    partial class CvDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240118105507_AddressSectionAdded")]
+    partial class AddressSectionAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.14");
@@ -33,6 +36,10 @@ namespace CV_storage.Data.Migrations
                     b.Property<int>("CurriculumVitaeId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("House")
+                        .HasMaxLength(1024)
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("PostalCode")
                         .HasMaxLength(1024)
                         .HasColumnType("TEXT");
@@ -42,7 +49,7 @@ namespace CV_storage.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("StreetAddress")
-                        .HasMaxLength(2048)
+                        .HasMaxLength(1024)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

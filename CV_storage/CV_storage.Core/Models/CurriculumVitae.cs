@@ -19,6 +19,8 @@ namespace CV_storage.Core.Models
         [MaxLength(12)]
         public string? PhoneNumber { get; set; }
 
+        public Address? MainAddress { get; set; } = new Address();
+
         public ICollection<LanguageKnowledge> LanguageKnowledges { get; set; }  = new List<LanguageKnowledge>();
         public ICollection<Education> Educations { get; set; } = new List<Education>();
     }

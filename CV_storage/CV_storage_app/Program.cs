@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using CV_storage.Core.Models;
 using CV_storage.Core.Services;
 using CV_storage.Data;
@@ -26,6 +27,7 @@ namespace CV_storage_app
             builder.Services.AddTransient<IEntityService<CurriculumVitae>, EntityService<CurriculumVitae>>();
             builder.Services.AddTransient<IEntityService<LanguageKnowledge>, EntityService<LanguageKnowledge>>();
             builder.Services.AddTransient<IEntityService<Education>, EntityService<Education>>();
+            builder.Services.AddTransient<IEntityService<Address>, EntityService<Address>>();
 
             var app = builder.Build();
 
