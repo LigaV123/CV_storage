@@ -7,7 +7,7 @@ namespace CV_storage_app.Models
     {
         public int Id { get; set; }
         [Required] public string? Language { get; set; }
-        public KnowledgeLevel LanguageLevel { get; set; }
+        [Required] public KnowledgeLevel? LanguageLevel { get; set; }
         public int CurriculumVitaeId { get; set; }
     }
 }

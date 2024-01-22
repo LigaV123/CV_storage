@@ -11,7 +11,7 @@
     </div>
     <div class="mb-3">
         @Html.LabelFor(m => m[i].SkillDescription, "Describe the Skill")
-        @Html.TextBoxFor(m => m[i].SkillDescription, new { @class = "form-control"})
+        @Html.TextAreaFor(m => m[i].SkillDescription, new { @class = "form-control"})
     </div>
     <div class="mb-3">
         @Html.LabelFor(m => m[i].SkillType, "Type of Skill")

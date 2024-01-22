@@ -39,11 +39,11 @@
     </div>
     <div class="mb-3">
         @Html.LabelFor(m => m.Education[lastElement].EducationStartDate, "Education Start Date")
-        @Html.TextBoxFor(m => m.Education[lastElement].EducationStartDate, new { placeholder = "dd.mm.yy or dd.mm.yyyy", @class = "form-control"})
+        @Html.TextBoxFor(m => m.Education[lastElement].EducationStartDate, new { @class = "form-control", type = "date" })
     </div>
     <div class="mb-3">
         @Html.LabelFor(m => m.Education[lastElement].EducationEndDate, "Education End Date")
-        @Html.TextBoxFor(m => m.Education[lastElement].EducationEndDate, new { placeholder = "dd.mm.yy or dd.mm.yyyy", @class = "form-control"})
+        @Html.TextBoxFor(m => m.Education[lastElement].EducationEndDate, new { @class = "form-control", type = "date" })
         <button type="button" id="@Model.Education[lastElement].Id" class="btn btn-danger delete-education">Remove Education</button>
     </div>
     <hr/>

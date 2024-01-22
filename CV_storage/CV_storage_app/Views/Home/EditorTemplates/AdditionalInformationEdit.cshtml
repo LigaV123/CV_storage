@@ -1,33 +1,5 @@
 ﻿@model List<AdditionalInformationViewModel>
 
-@*@if(Model.Count > 0)
-{
-    @Html.HiddenFor(m => m[0].Id)
-    <div class="mb-3">
-        @Html.LabelFor(m => m[0].AboutYou, "About You")
-        @Html.TextBoxFor(m => m[0].AboutYou, new { @class = "form-control"})
-    </div>
-    <div class="mb-3">
-        @Html.LabelFor(m => m[0].HobbiesAndInterests, "Hobbies and Interests")
-        @Html.TextBoxFor(m => m[0].HobbiesAndInterests, new { @class = "form-control"})
-    </div>
-}
-else
-{
-    var emptyModel = new AdditionalInformationViewModel();
-
-    @Html.HiddenFor(m => emptyModel.Id)
-    <div class="mb-3">
-        @Html.LabelFor(m => emptyModel.AboutYou, "About You")
-        @Html.TextBoxFor(m => emptyModel.AboutYou, new { @class = "form-control"})
-    </div>
-    <div class="mb-3">
-        @Html.LabelFor(m => emptyModel.HobbiesAndInterests, "Hobbies and Interests")
-        @Html.TextBoxFor(m => emptyModel.HobbiesAndInterests, new { @class = "form-control"})
-    </div>
-}*@
-
-
 @if (Model.Count == 0)
 {
     Model.Add(new AdditionalInformationViewModel());
@@ -36,9 +8,9 @@ else
 @Html.HiddenFor(m => m[0].Id)
 <div class="mb-3">
     @Html.LabelFor(m => m[0].AboutYou, "About You")
-    @Html.TextBoxFor(m => m[0].AboutYou, new { @class = "form-control"})
+    @Html.TextAreaFor(m => m[0].AboutYou, new { @class = "form-control"})
 </div>
 <div class="mb-3">
     @Html.LabelFor(m => m[0].HobbiesAndInterests, "Hobbies and Interests")
-    @Html.TextBoxFor(m => m[0].HobbiesAndInterests, new { @class = "form-control"})
+    @Html.TextAreaFor(m => m[0].HobbiesAndInterests, new { @class = "form-control"})
 </div>

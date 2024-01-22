@@ -15,7 +15,7 @@
         </div>
         <div class="mb-3">
             @Html.LabelFor(m => m[i].JobDescription, "Describe the Job")
-            @Html.TextBoxFor(m => m[i].JobDescription, new { @class = "form-control"})
+            @Html.TextAreaFor(m => m[i].JobDescription, new { @class = "form-control"})
         </div>
         <div class="mb-3">
             @Html.LabelFor(m => m[i].Workload, "Workload")
@@ -25,11 +25,11 @@
         </div>
         <div class="mb-3">
             @Html.LabelFor(m => m[i].EmploymentStartDate, "Employment Start Date")
-            @Html.TextBoxFor(m => m[i].EmploymentStartDate, new { placeholder = "dd.mm.yy or dd.mm.yyyy", @class = "form-control"})
+            @Html.TextBoxFor(m => m[i].EmploymentStartDate, new { @class = "form-control", type = "date" })
         </div>
         <div class="mb-3">
             @Html.LabelFor(m => m[i].EmploymentEndDate, "Employment End Date")
-            @Html.TextBoxFor(m => m[i].EmploymentEndDate, new { placeholder = "dd.mm.yy or dd.mm.yyyy", @class = "form-control"})
+            @Html.TextBoxFor(m => m[i].EmploymentEndDate, new { @class = "form-control", type = "date" })
             <button type="button" id="@Model[i].Id" class="btn btn-danger delete-job">Remove Job Experience</button>
         </div>
         <hr />

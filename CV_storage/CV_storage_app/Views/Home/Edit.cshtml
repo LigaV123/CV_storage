@@ -53,73 +53,29 @@
 {
     <script>
         $(document).ready(function(){
-            //language
-            $("#add-language-item").on("click", function(){
-                const itemCount = $('#language-section').find("div.mb-3").length / 2;
 
-                $.get(`/Language/AddLanguageSectionItem?itemCount=${itemCount}`, function (data, status){
-                    $('#language-section').append(data);
+            function AddSectionItem(sectionName, divCount, sectionClass){
+                $(`#add-${sectionName}-item`).on("click", function () {
+                    const itemCount = $(`#${sectionName}-section`).find("div.mb-3").length / divCount;
+
+                    $.get(`/${sectionClass}/Add${sectionClass}SectionItem?itemCount=${itemCount}`, function (data, status) {
+                        $(`#${sectionName}-section`).append(data);
+                    })
                 })
-            })
 
-            $("#language-section").on("click", ".delete-language", function(){
-                const id = $(this).attr("id");
+                $(`#${sectionName}-section`).on("click", `.delete-${sectionName}`, function () {
+                    const id = $(this).attr("id");
 
-                $.post("/Language/DeleteLanguageItem", { "id" : id }, function(data, status){
-                    window.location.reload();
+                    $.post(`/${sectionClass}/Delete${sectionClass}Item`, { "id": id }, function (data, status) {
+                        window.location.reload();
+                    })
                 })
-            })
+            }
 
-            //education
-            $("#add-education-item").on("click", function () {
-                const itemCount = $('#education-section').find("div.mb-3").length / 8;
-
-                $.get(`/Education/AddEducationSectionItem?itemCount=${itemCount}`, function (data, status) {
-                    $('#education-section').append(data);
-                })
-            })
-
-            $("#education-section").on("click", ".delete-education", function () {
-                const id = $(this).attr("id");
-
-                $.post("/Education/DeleteEducationItem", { "id": id }, function (data, status) {
-                    window.location.reload();
-                })
-            })
-
-            //job experience
-            $("#add-job-item").on("click", function () {
-                const itemCount = $('#job-section').find("div.mb-3").length / 6;
-
-                $.get(`/JobExperience/AddJobExperienceSectionItem?itemCount=${itemCount}`, function (data, status) {
-                    $('#job-section').append(data);
-                })
-            })
-
-            $("#job-section").on("click", ".delete-job", function () {
-                const id = $(this).attr("id");
-
-                $.post("/JobExperience/DeleteJobExperienceItem", { "id": id }, function (data, status) {
-                    window.location.reload();
-                })
-            })
-
-            //gained skill
-            $("#add-skill-item").on("click", function () {
-                const itemCount = $('#skill-section').find("div.mb-3").length / 3;
-
-                $.get(`/GainedSkill/AddGainedSkillSectionItem?itemCount=${itemCount}`, function (data, status) {
-                    $('#skill-section').append(data);
-                })
-            })
-
-            $("#skill-section").on("click", ".delete-skill", function () {
-                const id = $(this).attr("id");
-
-                $.post("/GainedSkill/DeleteGainedSkillItem", { "id": id }, function (data, status) {
-                    window.location.reload();
-                })
-            })
+            AddSectionItem("language", 2, "Language");
+            AddSectionItem("education", 8, "Education");
+            AddSectionItem("job", 6, "JobExperience");
+            AddSectionItem("skill", 3, "GainedSkill");
         })
     </script>
 }
