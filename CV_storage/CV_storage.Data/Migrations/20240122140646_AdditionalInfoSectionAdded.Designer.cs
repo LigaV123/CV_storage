@@ -2,6 +2,7 @@
 using CV_storage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CV_storage.Data.Migrations
 {
     [DbContext(typeof(CvDbContext))]
-    partial class CvDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240122140646_AdditionalInfoSectionAdded")]
+    partial class AdditionalInfoSectionAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.14");
@@ -30,6 +33,10 @@ namespace CV_storage.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("HobbiesAndInterests")
+                        .HasMaxLength(1875)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MessageToHiringManager")
                         .HasMaxLength(1875)
                         .HasColumnType("TEXT");
 

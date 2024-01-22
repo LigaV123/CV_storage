@@ -16,5 +16,6 @@ namespace CV_storage.Data
         public DbSet<JobExperience> JobExperience { get; set; }
         public DbSet<GainedSkill> GainedSkill { get; set; }
         public DbSet<Address> Address { get; set; }
+        public DbSet<AdditionalInformation> AdditionalInformation { get; set; }
     }
 }

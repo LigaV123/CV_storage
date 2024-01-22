@@ -13,30 +13,34 @@
     <div class="col">
         <h3>Cv Main Information</h3>
         @Html.EditorFor(m => m, "CvEdit")
-
         <div class="border border-dark border-1 mb-3"></div>
+
         <h3>Address Information</h3>
         @Html.EditorFor(m => m.MainAddress, "AddressEdit")
-
         <div class="border border-dark border-1 mb-3"></div>
+
         <h3>Job Experience</h3>
         @Html.EditorFor(m => m.JobExperience, "JobExperienceEdit")
         <button id="add-job-item" type="button" class="btn btn-success mb-3">Add Job Experience</button>
-
         <div class="border border-dark border-1 mb-3"></div>
+
         <h3>Gained Skills</h3>
         @Html.EditorFor(m => m.GainedSkill, "GainedSkillEdit")
         <button id="add-skill-item" type="button" class="btn btn-success mb-3">Add Skill</button>
-
         <div class="border border-dark border-1 mb-3"></div>
+
         <h3>Educational Information</h3>
         @Html.EditorFor(m => m.Education, "EducationEdit")
         <button id="add-education-item" type="button" class="btn btn-success mb-3">Add Education</button>
-
         <div class="border border-dark border-1 mb-3"></div>
+
         <h3>Language Information</h3>
         @Html.EditorFor(m => m.LanguageKnowledge, "LanguageListEdit")
-        <button id="add-language-item" type="button" class="btn btn-success mb-3">Add language</button>
+        <button id="add-language-item" type="button" class="btn btn-success mb-3">Add Language</button>
+        <div class="border border-dark border-1 mb-3"></div>
+
+        <h3>Additional Information</h3>
+        @Html.EditorFor(m => m.AdditionalInformation, "AdditionalInformationEdit")
     </div>
 
     <div class="btn-group" role="group">

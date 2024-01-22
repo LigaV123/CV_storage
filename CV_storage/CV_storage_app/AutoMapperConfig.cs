@@ -42,6 +42,10 @@ namespace CV_storage_app
                 cfg.CreateMap<GainedSkill, GainedSkillViewModel>();
                 cfg.CreateMap<GainedSkillViewModel, GainedSkill>()
                     .ForMember(d => d.CurriculumVitae, opt => opt.Ignore());
+
+                cfg.CreateMap<AdditionalInformation, AdditionalInformationViewModel>();
+                cfg.CreateMap<AdditionalInformationViewModel, AdditionalInformation>()
+                    .ForMember(d => d.CurriculumVitae, opt => opt.Ignore());
             });
 
             #if DEBUG

@@ -11,8 +11,9 @@ namespace CV_storage_app.Models
         [Required] public string? LastName { get; set; }
         [Required] public string? Email { get; set; }
         [Required] public string? PhoneNumber { get; set; }
-        public AddressViewModel? MainAddress { get; set; } = new AddressViewModel();
 
+        public List<AddressViewModel> MainAddress { get; set; } = new List<AddressViewModel>();
+        public List<AdditionalInformationViewModel> AdditionalInformation { get; set; } = new List<AdditionalInformationViewModel>();
         public List<LanguageKnowledgeViewModel> LanguageKnowledge { get; set; } = new List<LanguageKnowledgeViewModel>();
         public List<EducationViewModel> Education { get; set; } = new List<EducationViewModel>();
         public List<JobExperienceViewModel> JobExperience { get; set; } = new List<JobExperienceViewModel>();
