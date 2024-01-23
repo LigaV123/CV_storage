@@ -5,74 +5,54 @@
 }
 
 <h1>Create</h1>
-
 <h4>New CV</h4>
-<hr />
+<div class="border border-dark border-1 mb-3"></div>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group mb-3">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="MiddleName" class="control-label"></label>
-                <input asp-for="MiddleName" class="form-control" />
-                <span asp-validation-for="MiddleName" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
+            
+            <h3>Main Information</h3>
+            @Html.EditorFor(m => m, "CvEdit")
+            <div class="border border-dark border-1 mb-3"></div>
 
-            <div id="language-section">
+            <h3>Address Information</h3>
+            @Html.EditorFor(m => m.MainAddress, "AddressEdit")
+            <div class="border border-dark border-1 mb-3"></div>
 
-            </div>
+            <h3>Job Experience</h3>
+            @Html.EditorFor(m => m.JobExperience, "JobExperienceEdit")
+            <button id="add-job-item" type="button" class="btn btn-success mb-3">Add Job Experience</button>
+            <div class="border border-dark border-1 mb-3"></div>
 
-            <div class="form-group mb-3">
-                <button id="add-language-item" type="button" class="btn btn-success">Add language</button>
-                <input type="submit" value="Create" class="btn btn-primary"/>
+            <h3>Gained Skills</h3>
+            @Html.EditorFor(m => m.GainedSkill, "GainedSkillEdit")
+            <button id="add-skill-item" type="button" class="btn btn-success mb-3">Add Skill</button>
+            <div class="border border-dark border-1 mb-3"></div>
+
+            <h3>Educational Information</h3>
+            @Html.EditorFor(m => m.Education, "EducationEdit")
+            <button id="add-education-item" type="button" class="btn btn-success mb-3">Add Education</button>
+            <div class="border border-dark border-1 mb-3"></div>
+
+            <h3>Language Information</h3>
+            @Html.EditorFor(m => m.LanguageKnowledge, "LanguageListEdit")
+            <button id="add-language-item" type="button" class="btn btn-success mb-3">Add Language</button>
+            <div class="border border-dark border-1 mb-3"></div>
+
+            <h3>Additional Information</h3>
+            @Html.EditorFor(m => m.AdditionalInformation, "AdditionalInformationEdit")
+            
+            <div class="btn-group" role="group">
+                <button asp-action="Index" class="btn btn-primary mb-3">Back to List</button>
+                <button type="submit" class="btn btn-primary mb-3">Create</button>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-        $(document).ready(function(){
-            $("#add-language-item").on("click", function(){
-                const itemCount = $('#language-section').find("div.mb-3").length / 2;
-
-                $.get(`AddLanguageSectionItem?itemCount=${itemCount}`, function (data, status){
-                    $('#language-section').append(data);
-                })
-            })
-
-            $(".delete-language").on("click", function(){
-                const id = $(this).attr("id");
-
-                $.post("DeleteLanguageItem", { "id" : id }, function(data, status){
-                    window.location.reload();
-                })
-            })
-        })
-    </script>
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_MyScript");}
 }

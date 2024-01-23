@@ -1,0 +1,43 @@
+﻿<script>
+    $(document).ready(function () {
+
+        function AddSectionItem(sectionName, divCount, sectionClass) {
+            
+            $(`#add-${sectionName}-item`).on("click", function () {
+                const itemCount = $(`#${sectionName}-section`).find("div.mb-3").length / divCount;
+
+                const parentDiv = $(`#${sectionName}-section`);
+                //const hiddenInput = parentDiv.find('input[type="text"]');
+                //const hiddenId = hiddenInput.attr('id');
+
+                $.get(`/${sectionClass}/Add${sectionClass}SectionItem?itemCount=${itemCount}`, function (data, status) {
+                    $(`#${sectionName}-section`).append(data);
+                    //console.log("--- adding ---");
+                    //console.log(hiddenId);
+                    //console.log(data);
+                    //console.log(status);
+                    console.log(itemCount);
+                })
+            })
+
+            $(`#${sectionName}-section`).on("click", `.delete-${sectionName}`, function () {
+                const id = $(this).attr("id");
+
+                $.post(`/${sectionClass}/Delete${sectionClass}Item`, { "id": id }, function (data, status) {
+                    //window.location.reload(); //removes all newly added sections
+                    
+                    console.log("--- removing/deleting ---");
+                    console.log(id); //loads only number, because it is button id
+                    console.log(data);
+                    console.log(status);
+
+                })
+            })
+        }
+
+        AddSectionItem("language", 2, "Language");
+        AddSectionItem("education", 8, "Education");
+        AddSectionItem("job", 6, "JobExperience");
+        AddSectionItem("skill", 3, "GainedSkill");
+    })
+</script>

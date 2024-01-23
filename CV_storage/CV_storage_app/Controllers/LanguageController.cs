@@ -1,4 +1,6 @@
-﻿using CV_storage.Core.Models;
+﻿using System.Collections;
+using AutoMapper;
+using CV_storage.Core.Models;
 using CV_storage.Core.Services;
 using CV_storage_app.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +23,15 @@ namespace CV_storage_app.Controllers
             {
                 LanguageKnowledge = Enumerable.Repeat(new LanguageKnowledgeViewModel(), itemCount + 1).ToList()
             };
+
+            //var language = model.LanguageKnowledge[^1];
+            //_languageService.Create(new LanguageKnowledge
+            //{
+            //    Id = language.Id,
+            //    CurriculumVitaeId = language.CurriculumVitaeId,
+            //    Language = language.Language,
+            //    LanguageLevel = language.LanguageLevel
+            //});
 
             return PartialView(model);
         }

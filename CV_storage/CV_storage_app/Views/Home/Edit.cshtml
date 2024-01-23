@@ -1,5 +1,4 @@
-﻿@using CV_storage.Core.Enums
-@model CvItemViewModel
+﻿@model CvItemViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -11,7 +10,7 @@
 @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
 {
     <div class="col">
-        <h3>Cv Main Information</h3>
+        <h3>Main Information</h3>
         @Html.EditorFor(m => m, "CvEdit")
         <div class="border border-dark border-1 mb-3"></div>
 
@@ -51,31 +50,5 @@
 
 @section Scripts
 {
-    <script>
-        $(document).ready(function(){
-
-            function AddSectionItem(sectionName, divCount, sectionClass){
-                $(`#add-${sectionName}-item`).on("click", function () {
-                    const itemCount = $(`#${sectionName}-section`).find("div.mb-3").length / divCount;
-
-                    $.get(`/${sectionClass}/Add${sectionClass}SectionItem?itemCount=${itemCount}`, function (data, status) {
-                        $(`#${sectionName}-section`).append(data);
-                    })
-                })
-
-                $(`#${sectionName}-section`).on("click", `.delete-${sectionName}`, function () {
-                    const id = $(this).attr("id");
-
-                    $.post(`/${sectionClass}/Delete${sectionClass}Item`, { "id": id }, function (data, status) {
-                        window.location.reload();
-                    })
-                })
-            }
-
-            AddSectionItem("language", 2, "Language");
-            AddSectionItem("education", 8, "Education");
-            AddSectionItem("job", 6, "JobExperience");
-            AddSectionItem("skill", 3, "GainedSkill");
-        })
-    </script>
+    @{await Html.RenderPartialAsync("_MyScript");}
 }

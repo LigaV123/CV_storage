@@ -62,8 +62,19 @@ namespace CV_storage_app.Controllers
                 .Include(cv => cv.GainedSkills)
                 .Include(cv => cv.AdditionalInformation)
                 .SingleOrDefault();
+
             if (cv != null)
             {
+                if (cv.MainAddress.Count == 0)
+                {
+                    cv.MainAddress.Add(new Address());
+                }
+
+                if(cv.AdditionalInformation.Count == 0)
+                {
+                    cv.AdditionalInformation.Add(new AdditionalInformation());
+                }
+
                 return View(_mapper.Map<CvItemViewModel>(cv));
             }
             
