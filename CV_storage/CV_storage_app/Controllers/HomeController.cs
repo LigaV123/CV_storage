@@ -13,12 +13,12 @@ namespace CV_storage_app.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IEntityService<CurriculumVitae> _cvService;
         private readonly IMapper _mapper;
-        private readonly ICvValidations _validations;
+        private readonly IEnumerable<ICvValidations> _validations;
 
         public HomeController(ILogger<HomeController> logger, 
             IEntityService<CurriculumVitae> cvService,
             IMapper mapper,
-            ICvValidations validations)
+            IEnumerable<ICvValidations> validations)
         {
             _logger = logger;
             _cvService = cvService;
@@ -84,7 +84,7 @@ namespace CV_storage_app.Controllers
         [HttpPost]
         public IActionResult Edit(CvItemViewModel cv)
         {
-            if (!_validations.IsValid(cv, ModelState))
+            if (!_validations.All(v => v.IsValid(cv, ModelState)))
             {
                 return View(cv);
             }

@@ -1,8 +1,8 @@
 ﻿using CV_storage_app.Models;
 
-namespace CV_storage_app.Validations
+namespace CV_storage_app.ValidationExtentions
 {
-    public class CvItemFormattingMethods
+    public class CvItemFormatting
     {
         public static string Languages(List<LanguageKnowledgeViewModel> model)
         {

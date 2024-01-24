@@ -22,8 +22,16 @@ namespace CV_storage_app
             );
             var mapper = AutoMapperConfig.CreateMapper();
             builder.Services.AddSingleton(mapper);
-            builder.Services.AddSingleton<ICvValidations, CvEditValidations>();
+
+            builder.Services.AddSingleton<ICvValidations, CvModelStateValidation>();
+            builder.Services.AddSingleton<ICvValidations, CvDateValidation>();
+            builder.Services.AddSingleton<ICvValidations, CvDuplicateItemValidation>();
+            builder.Services.AddSingleton<ICvValidations, CvEnumValueValidation>();
+            builder.Services.AddSingleton<ICvValidations, CvPhoneNumberValidation>();
+
+            builder.Services.AddTransient<ICvDbContext, CvDbContext>();
             builder.Services.AddTransient<IDbService, DbService>();
+
             builder.Services.AddTransient<IEntityService<CurriculumVitae>, EntityService<CurriculumVitae>>();
             builder.Services.AddTransient<IEntityService<LanguageKnowledge>, EntityService<LanguageKnowledge>>();
             builder.Services.AddTransient<IEntityService<Education>, EntityService<Education>>();

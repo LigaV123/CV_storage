@@ -1,9 +1,9 @@
 ﻿using CV_storage_app.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace CV_storage_app.Validations
+namespace CV_storage_app.ValidationExtentions
 {
-    public class CvModelListValidationMethods
+    public class CvModelListValidation
     {
         public static bool DuplicateListIsEmpty<T>(List<T> model, Func<List<T>, string> methodName, ModelStateDictionary modelState)
         {
@@ -52,6 +52,6 @@ namespace CV_storage_app.Validations
             return true;
         }
 
-        
+
     }
 }
