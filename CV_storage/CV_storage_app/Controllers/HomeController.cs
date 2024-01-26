@@ -10,17 +10,15 @@ namespace CV_storage_app.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly IEntityService<CurriculumVitae> _cvService;
         private readonly IMapper _mapper;
         private readonly IEnumerable<ICvValidations> _validations;
 
-        public HomeController(ILogger<HomeController> logger, 
+        public HomeController( 
             IEntityService<CurriculumVitae> cvService,
             IMapper mapper,
             IEnumerable<ICvValidations> validations)
         {
-            _logger = logger;
             _cvService = cvService;
             _mapper = mapper;
             _validations = validations;
@@ -103,12 +101,21 @@ namespace CV_storage_app.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var cv = new CurriculumVitae();
+            cv.MainAddress.Add(new Address());
+            cv.AdditionalInformation.Add(new AdditionalInformation());
+
+            return View(_mapper.Map<CvItemViewModel>(cv));
         }
 
         [HttpPost]
         public IActionResult Create(CvItemViewModel cv)
         {
+            if (!_validations.All(v => v.IsValid(cv, ModelState)))
+            {
+                return View(cv);
+            }
+
             _cvService.Create(_mapper.Map<CurriculumVitae>(cv));
 
             return RedirectToAction("Index");

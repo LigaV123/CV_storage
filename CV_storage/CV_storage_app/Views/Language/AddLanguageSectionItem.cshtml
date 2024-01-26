@@ -5,7 +5,7 @@
     var lastElement = Model.LanguageKnowledge.Count - 1;
 }
 
-<div>
+<div id="language_@lastElement">
     @Html.HiddenFor(m => m.LanguageKnowledge[lastElement].Id)
     <div class="mb-3">
         @Html.LabelFor(m => m.LanguageKnowledge[lastElement].Language, "Language")
@@ -17,7 +17,7 @@
         <select asp-for="@Model.LanguageKnowledge[lastElement].LanguageLevel" asp-items="Html.GetEnumSelectList<KnowledgeLevel>()">
             <option value="">Please select</option>
         </Select>
-        <button type="button" id="@Model.LanguageKnowledge[lastElement].Id" class="btn btn-danger delete-language">Remove Language</button>
     </div>
+    <button type="button" id="@Model.LanguageKnowledge[lastElement].Id" class="btn btn-danger delete-language">Remove Language</button>
     <hr/>
 </div>

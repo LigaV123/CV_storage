@@ -10,21 +10,14 @@ namespace CV_storage_app.Controllers
     public class LanguageController : Controller
     {
         private readonly IEntityService<LanguageKnowledge> _languageService;
-        private readonly IEntityService<CurriculumVitae> _cvService;
-        private readonly IMapper _mapper;
 
-        public LanguageController(
-            IEntityService<LanguageKnowledge> languageService,
-            IMapper mapper,
-            IEntityService<CurriculumVitae> cvService)
+        public LanguageController(IEntityService<LanguageKnowledge> languageService)
         {
             _languageService = languageService;
-            _mapper = mapper;
-            _cvService = cvService;
         }
 
         [HttpGet]
-        public IActionResult AddLanguageSectionItem(int itemCount, int cvId)
+        public IActionResult AddLanguageSectionItem(int itemCount)
         {
             var model = new CvItemViewModel
             {
@@ -35,9 +28,10 @@ namespace CV_storage_app.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteLanguageItem(int id, int cvId)
+        public IActionResult DeleteLanguageItem(int id)
         {
             var language = _languageService.GetById(id);
+
             if (language != null)
             {
                 _languageService.Delete(language);

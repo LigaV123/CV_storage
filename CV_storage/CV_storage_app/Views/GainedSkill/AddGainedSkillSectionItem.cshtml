@@ -5,22 +5,22 @@
     var lastElement = Model.GainedSkill.Count - 1;
 }
 
-<div>
+<div id="skill_@lastElement">
     @Html.HiddenFor(m => m.GainedSkill[lastElement].Id)
     <div class="mb-3">
-        @Html.LabelFor(m =>m.GainedSkill[lastElement].Skill, "Skill")
-        @Html.TextBoxFor(m => m.GainedSkill[lastElement].Skill, new { @class = "form-control"})
+        @Html.LabelFor(m => m.GainedSkill[lastElement].Skill, "Skill")
+        @Html.TextBoxFor(m => m.GainedSkill[lastElement].Skill, new { @class = "form-control" })
     </div>
     <div class="mb-3">
         @Html.LabelFor(m => m.GainedSkill[lastElement].SkillDescription, "Describe the Skill")
-        @Html.TextAreaFor(m => m.GainedSkill[lastElement].SkillDescription, new { @class = "form-control"})
+        @Html.TextAreaFor(m => m.GainedSkill[lastElement].SkillDescription, new { @class = "form-control" })
     </div>
     <div class="mb-3">
         @Html.LabelFor(m => m.GainedSkill, "Type of Skill")
         <select asp-for="@Model.GainedSkill[lastElement].SkillType" asp-items="Html.GetEnumSelectList<TypeOfSkill>()">
             <option value="">Please select</option>
         </Select>
-        <button type="button" id="@Model.GainedSkill[lastElement].Id" class="btn btn-danger delete-skill">Remove The Skill</button>
     </div>
-    <hr />
+    <button type="button" id="@Model.GainedSkill[lastElement].Id" class="btn btn-danger delete-skill">Remove The Skill</button>
+    <hr/>
 </div>
