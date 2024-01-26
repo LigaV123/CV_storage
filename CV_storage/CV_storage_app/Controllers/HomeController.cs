@@ -121,6 +121,22 @@ namespace CV_storage_app.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult Print(int id)
+        {
+            var cv = _cvService.QueryById(id)
+                .Include(cv => cv.LanguageKnowledges)
+                .Include(cv => cv.Educations)
+                .Include(cv => cv.MainAddress)
+                .Include(cv => cv.JobExperiences)
+                .Include(cv => cv.GainedSkills)
+                .Include(cv => cv.AdditionalInformation)
+                .SingleOrDefault();
+
+            
+            return View(_mapper.Map<CvItemViewModel>(cv));
+        }
+
         public IActionResult Privacy()
         {
             return View();
