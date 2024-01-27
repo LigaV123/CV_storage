@@ -3,59 +3,37 @@
 @{
     ViewData["Title"] = "Print";
     string headerPart = $"{Model.FirstName} {Model.LastName}";
+    //size: 7in 9.25in;
+    //margin: 27mm 16mm 27mm 16mm;
 }
 
 <h2>CV Print view for @headerPart</h2>
 @using (Html.BeginForm("Print", "Home", FormMethod.Get))
 {
-    <div class="col border-dark border-1">
+    <section>
+        @Html.EditorFor(m => m, "CvMainInfoAndContactsPrint")
+
         <div class="row">
-            <div class="col ps-1 pe-4">
-                <h3>Main Information</h3>
-                @Html.EditorFor(m => m, "CvEdit")
+            <div class="col">
+                @Html.EditorFor(m => m.JobExperience, "CvJobExperiencePrint")
             </div>
 
-            <div class="col pe-1 ps-4">
-                <h3>Address Information</h3>
-                @Html.EditorFor(m => m.MainAddress, "AddressEdit")
-            </div>
-
-            <div class="border border-dark border-1 my-4"></div>
-        </div>
-
-        <div class="row row-cols-2">
-            <div class="col ps-1 pe-4">
-                <h3>Job Experience</h3>
-                @Html.EditorFor(m => m.JobExperience, "JobExperienceEdit")
-                <button id="add-job-item" type="button" class="btn btn-success">Add Job Experience</button>
-
+            <div class="col">
+                @Html.EditorFor(m => m.GainedSkill, "CvTechnicalSkillPrint")
                 <div class="border border-dark border-1 my-4"></div>
 
-                <h3>Gained Skills</h3>
-                @Html.EditorFor(m => m.GainedSkill, "GainedSkillEdit")
-                <button id="add-skill-item" type="button" class="btn btn-success">Add Skill</button>
-            </div>
-
-            <div class="col pe-1 ps-4">
-                <h3>Educational Information</h3>
-                @Html.EditorFor(m => m.Education, "EducationEdit")
-                <button id="add-education-item" type="button" class="btn btn-success">Add Education</button>
-
+                @Html.EditorFor(m => m.Education, "CvEducationPrint")
                 <div class="border border-dark border-1 my-4"></div>
 
-                <h3>Language Information</h3>
-                @Html.EditorFor(m => m.LanguageKnowledge, "LanguageListEdit")
-                <button id="add-language-item" type="button" class="btn btn-success">Add Language</button>
+                @Html.EditorFor(m => m.LanguageKnowledge, "CvLanguagePrint")
+                <div class="border border-dark border-1 my-4"></div>
+
+                @Html.EditorFor(m => m.GainedSkill, "CvSoftSkillPrint")
             </div>
         </div>
+    </section>
 
-        <div class="border border-dark border-1 col my-4"></div>
-
-        <h3>Additional Information</h3>
-        @Html.EditorFor(m => m.AdditionalInformation, "AdditionalInformationEdit")
-    </div>
-
-    <div class="btn-group" role="group">
+    <div class="btn-group w-25" role="group">
         <button asp-action="Index" class="btn btn-primary mb-3">Back to List</button>
         <button asp-action="Edit" class="btn btn-primary mb-3">Back to Edit</button>
     </div>

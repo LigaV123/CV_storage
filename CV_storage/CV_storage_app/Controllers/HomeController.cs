@@ -133,7 +133,6 @@ namespace CV_storage_app.Controllers
                 .Include(cv => cv.AdditionalInformation)
                 .SingleOrDefault();
 
-            
             return View(_mapper.Map<CvItemViewModel>(cv));
         }
 

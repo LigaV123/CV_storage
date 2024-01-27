@@ -1,0 +1,25 @@
+﻿@model CvItemViewModel
+
+@{
+    var middleName = String.IsNullOrEmpty(Model.MiddleName) ? "" : Model.MiddleName + " ";
+    var fullName = $"{Model.FirstName} {middleName}{Model.LastName}";
+}
+
+@Html.HiddenFor(m => m.Id)
+<div>
+    <h3 class="text-center">@fullName</h3>
+    <p>Email: @Model.Email</p>
+    <p>Phone number: @Model.PhoneNumber</p>
+    <p>Living location: @Model.MainAddress[0].Country ,  @Model.MainAddress[0].City</p>
+</div>
+
+<div class="border border-dark border-1 my-3 w-100"></div>
+
+<div>
+    <h4 class="">Profile</h4>
+    <p>@Model.AdditionalInformation[0].AboutYou</p>
+    <h5>Hobbies and interests</h5>
+    <p>@Model.AdditionalInformation[0].HobbiesAndInterests</p>
+</div>
+
+<div class="border border-dark border-1 my-4"></div>
