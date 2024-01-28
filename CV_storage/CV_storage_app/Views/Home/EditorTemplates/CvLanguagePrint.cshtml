@@ -1,29 +1,11 @@
 ﻿@model List<LanguageKnowledgeViewModel>
 
-<h3>Language Knowledge</h3>
+<h4><strong>Language Knowledge</strong></h4>
 @for (int i = 0; i < Model.Count; i++)
 {
-    <div>
-        @{
-            var bgColor = " bg-info";
-            var size = "v-25 h-25 rounded-circle";
-        }
-
-        @Html.HiddenFor(m => m[i].Id)
-        <p>@Model[i].Language  @Model[i].LanguageLevel</p>
-
-        @for (int j = 1; j <= 4; j++)
-        {
-            <div>
-                @{
-                    @if ((int) Model[i].LanguageLevel.Value <= j)
-                    {
-                        size += bgColor;
-                    }
-                }
-
-                <div id="@j" class="@size"></div>
-            </div>
-        }
+    @Html.HiddenFor(m => m[i].Id)
+    <div class="row">
+        <p class="col mb-0">@Model[i].Language</p>
+        <p class="col mb-0 text-end">@Model[i].LanguageLevel</p>
     </div>
 }

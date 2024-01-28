@@ -3,8 +3,6 @@
 @{
     ViewData["Title"] = "Print";
     string headerPart = $"{Model.FirstName} {Model.LastName}";
-    //size: 7in 9.25in;
-    //margin: 27mm 16mm 27mm 16mm;
 }
 
 <h2>CV Print view for @headerPart</h2>
@@ -20,13 +18,13 @@
 
             <div class="col">
                 @Html.EditorFor(m => m.GainedSkill, "CvTechnicalSkillPrint")
-                <div class="border border-dark border-1 my-4"></div>
+                <div class="separation-line"></div>
 
                 @Html.EditorFor(m => m.Education, "CvEducationPrint")
-                <div class="border border-dark border-1 my-4"></div>
+                <div class="separation-line"></div>
 
                 @Html.EditorFor(m => m.LanguageKnowledge, "CvLanguagePrint")
-                <div class="border border-dark border-1 my-4"></div>
+                <div class="separation-line"></div>
 
                 @Html.EditorFor(m => m.GainedSkill, "CvSoftSkillPrint")
             </div>
@@ -35,6 +33,6 @@
 
     <div class="btn-group w-25" role="group">
         <button asp-action="Index" class="btn btn-primary mb-3">Back to List</button>
-        <button asp-action="Edit" class="btn btn-primary mb-3">Back to Edit</button>
+        <button asp-action="Edit" class="btn btn-info mb-3">Back to Edit</button>
     </div>
 }
