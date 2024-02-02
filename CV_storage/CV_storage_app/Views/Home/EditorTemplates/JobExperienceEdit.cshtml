@@ -3,48 +3,46 @@
 
 <div id="job-section">
 
-    @if (Model != null)
+    @for (var i = 0; i < Model.Count; i++)
     {
-        @for (var i = 0; i < Model.Count; i++)
-        {
-            <div id="job_@i">
-                @Html.HiddenFor(m => m[i].Id)
-                <div class="mb-3">
-                    @Html.LabelFor(m => m[i].CompanyName, "Name of Company")
-                    @Html.TextBoxFor(m => m[i].CompanyName, new { @class = "form-control" })
-                </div>
-                <div class="mb-3">
-                    @Html.LabelFor(m => m[i].Position, "Position")
-                    @Html.TextBoxFor(m => m[i].Position, new { @class = "form-control" })
-                </div>
-                <div class="mb-3">
-                    @Html.LabelFor(m => m[i].JobDescription, "Describe the Job")
-                    @Html.TextAreaFor(m => m[i].JobDescription, new { @class = "form-control" })
-                </div>
-                <div class="mb-3">
-                    @Html.LabelFor(m => m[i].Workload, "Workload")
-                    <select asp-for="@Model[i].Workload" asp-items="Html.GetEnumSelectList<AmountOfLabor>()">
-                        <option value="">Please select</option>
-                    </Select>
-                </div>
-                
-                <div class="row">
-                    <div class="mb-3 col">
-                        @Html.LabelFor(m => m[i].EmploymentStartDate, "Employment Start Date")
-                        @Html.TextBoxFor(m => m[i].EmploymentStartDate, new { @class = "form-control", type = "date" })
-                    </div>
-                    <div class="mb-3 col">
-                        @Html.LabelFor(m => m[i].EmploymentEndDate, "Employment End Date")
-                        @Html.TextBoxFor(m => m[i].EmploymentEndDate, new { @class = "form-control", type = "date" })
-                    </div>
-                </div>
-
-                <button type="button" id="@Model[i].Id" class="btn btn-danger delete-job">Remove Job Experience</button>
-                <hr class="my-4"/>
+        <div id="job_@i">
+            @Html.HiddenFor(m => m[i].Id)
+            <div class="mb-3">
+                @Html.LabelFor(m => m[i].CompanyName, "Name of Company")
+                @Html.TextBoxFor(m => m[i].CompanyName, new { @class = "form-control" })
             </div>
-        }
+            <div class="mb-3">
+                @Html.LabelFor(m => m[i].Position, "Position")
+                @Html.TextBoxFor(m => m[i].Position, new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(m => m[i].JobDescription, "Describe the Job")
+                @Html.TextAreaFor(m => m[i].JobDescription, new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(m => m[i].Workload, "Workload")
+                <select asp-for="@Model[i].Workload" asp-items="Html.GetEnumSelectList<AmountOfLabor>()">
+                    <option value="">Please select</option>
+                </Select>
+            </div>
+
+            <div class="row">
+                <div class="mb-3 col">
+                    @Html.LabelFor(m => m[i].EmploymentStartDate, "Employment Start Date")
+                    @Html.TextBoxFor(m => m[i].EmploymentStartDate, new { @class = "form-control", type = "date" })
+                </div>
+                <div class="mb-3 col">
+                    @Html.LabelFor(m => m[i].EmploymentEndDate, "Employment End Date")
+                    @Html.TextBoxFor(m => m[i].EmploymentEndDate, new { @class = "form-control", type = "date" })
+                </div>
+            </div>
+
+            <button type="button" id="@Model[i].Id" class="btn btn-danger delete-job">Remove Job Experience</button>
+            <hr class="my-4"/>
+        </div>
     }
-    else
+
+    @if (Model.Count == 0)
     {
         <p class="alert alert-info">You can add job experience.</p>
     }

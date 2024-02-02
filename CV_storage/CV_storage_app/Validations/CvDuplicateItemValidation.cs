@@ -17,7 +17,7 @@ namespace CV_storage_app.Validations
                     .Count(ee =>
                         ee.EducationalEstablishment.ToLowerInvariant() == e.EducationalEstablishment.ToLowerInvariant()
                         && ee.Faculty.ToLowerInvariant() == e.Faculty.ToLowerInvariant()
-                        && ee.Department.ToLowerInvariant() == e.Department.ToLowerInvariant()
+                        //&& ee.Department.ToLowerInvariant() == e.Department.ToLowerInvariant()
                         && ee.Degree == e.Degree) > 1).ToList();
 
             var duplicateSkill = cv.GainedSkill
