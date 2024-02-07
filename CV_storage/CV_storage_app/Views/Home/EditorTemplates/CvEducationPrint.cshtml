@@ -9,7 +9,7 @@
             var endDate = String.IsNullOrEmpty(Model[i].EducationEndDate) ? "" : " - " + Model[i].EducationEndDate;
             var date = $"{Model[i].EducationStartDate}{endDate}";
             var department = String.IsNullOrEmpty(Model[i].Department) ? "" : " in " + Model[i].Department + " department";
-            var degree = Model[i].Degree.Value == DegreeInformation.Other ? "" : Model[i].Degree.Value + " of ";
+            var degree = Model[i].Degree == DegreeInformation.Other ? "" : Model[i].Degree + " of ";
         }
         
         <div class="row">

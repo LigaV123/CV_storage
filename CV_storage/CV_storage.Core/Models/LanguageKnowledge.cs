@@ -7,7 +7,7 @@ namespace CV_storage.Core.Models
     {
         [MaxLength(30)]
         public string? Language { get; set; }
-        public KnowledgeLevel? LanguageLevel { get; set; }
+        public KnowledgeLevel LanguageLevel { get; set; }
         public int CurriculumVitaeId { get; set; }
         public CurriculumVitae CurriculumVitae { get; set; }
     }

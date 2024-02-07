@@ -10,18 +10,8 @@ namespace CV_storage_app
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<CurriculumVitae, CvItemViewModel>()
-                    .ForMember(d => d.LanguageKnowledge,
-                        opt => opt.MapFrom(cv => cv.LanguageKnowledges))
-                    .ForMember(d => d.Education, opt => opt.MapFrom(cv => cv.Educations))
-                    .ForMember(d => d.JobExperience, opt => opt.MapFrom(cv => cv.JobExperiences))
-                    .ForMember(d => d.GainedSkill, opt => opt.MapFrom(cv => cv.GainedSkills));
-                cfg.CreateMap<CvItemViewModel, CurriculumVitae>()
-                    .ForMember(d => d.LanguageKnowledges,
-                        opt => opt.MapFrom(cv => cv.LanguageKnowledge))
-                    .ForMember(d => d.Educations, opt => opt.MapFrom(cv => cv.Education))
-                    .ForMember(d => d.JobExperiences, opt => opt.MapFrom(cv => cv.JobExperience))
-                    .ForMember(d => d.GainedSkills, opt => opt.MapFrom(cv => cv.GainedSkill));
+                cfg.CreateMap<CurriculumVitae, CvItemViewModel>();
+                cfg.CreateMap<CvItemViewModel, CurriculumVitae>();
 
                 cfg.CreateMap<LanguageKnowledge, LanguageKnowledgeViewModel>();
                 cfg.CreateMap<LanguageKnowledgeViewModel, LanguageKnowledge>()

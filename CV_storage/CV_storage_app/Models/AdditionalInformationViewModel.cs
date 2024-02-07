@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CV_storage_app.Models
+﻿namespace CV_storage_app.Models
 {
     public class AdditionalInformationViewModel
     {

@@ -1,9 +1,11 @@
-using System.Collections.Immutable;
 using CV_storage.Core.Models;
 using CV_storage.Core.Services;
 using CV_storage.Data;
 using CV_storage.Services;
-using CV_storage_app.Validations;
+using CV_storage_app.Models;
+using CV_storage_app.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CV_storage_app
@@ -16,6 +18,7 @@ namespace CV_storage_app
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddFluentValidationAutoValidation();
 
             builder.Services.AddDbContext<CvDbContext>(options => 
                 options.UseSqlite(builder.Configuration.GetConnectionString("cv-storage"))
@@ -23,14 +26,18 @@ namespace CV_storage_app
             var mapper = AutoMapperConfig.CreateMapper();
             builder.Services.AddSingleton(mapper);
 
-            builder.Services.AddSingleton<ICvValidations, CvModelStateValidation>();
-            builder.Services.AddSingleton<ICvValidations, CvDateValidation>();
-            builder.Services.AddSingleton<ICvValidations, CvDuplicateItemValidation>();
-            builder.Services.AddSingleton<ICvValidations, CvEnumValueValidation>();
-            builder.Services.AddSingleton<ICvValidations, CvPhoneNumberValidation>();
+            builder.Services.AddScoped<IValidator<AddressViewModel>, AddressViewModelValidator>();
+            builder.Services.AddScoped<IValidator<CvItemViewModel>, CvItemViewModelValidator>();
+            builder.Services.AddScoped<IValidator<EducationViewModel>, EducationViewModelValidator>();
+            builder.Services.AddScoped<IValidator<GainedSkillViewModel>, GainedSkillViewModelValidator>();
+            builder.Services.AddScoped<IValidator<JobExperienceViewModel>, JobExperienceViewModelValidator>();
+            builder.Services.AddScoped<IValidator<LanguageKnowledgeViewModel>, LanguageKnowledgeViewModelValidator>();
+
+            builder.Services.AddSingleton<ICvValidations, DuplicateItemValidation>();
 
             builder.Services.AddTransient<ICvDbContext, CvDbContext>();
             builder.Services.AddTransient<IDbService, DbService>();
+            builder.Services.AddTransient<IDeleteService, DeleteService>();
 
             builder.Services.AddTransient<IEntityService<CurriculumVitae>, EntityService<CurriculumVitae>>();
             builder.Services.AddTransient<IEntityService<LanguageKnowledge>, EntityService<LanguageKnowledge>>();

@@ -1,5 +1,4 @@
-﻿using CV_storage.Core.Models;
-using CV_storage.Core.Services;
+﻿using CV_storage.Core.Services;
 using CV_storage_app.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,11 +6,11 @@ namespace CV_storage_app.Controllers
 {
     public class GainedSkillController : Controller
     {
-        private readonly IEntityService<GainedSkill> _skillService;
+        private readonly IDeleteService _deleteService;
 
-        public GainedSkillController(IEntityService<GainedSkill> skillService)
+        public GainedSkillController(IDeleteService deleteService)
         {
-            _skillService = skillService;
+            _deleteService = deleteService;
         }
 
         [HttpGet]
@@ -28,12 +27,7 @@ namespace CV_storage_app.Controllers
         [HttpPost]
         public IActionResult DeleteGainedSkillItem(int id)
         {
-            var skill = _skillService.GetById(id);
-
-            if (skill != null)
-            {
-                _skillService.Delete(skill);
-            }
+            _deleteService.DeleteSkillById(id);
 
             return Ok();
         }

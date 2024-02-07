@@ -23,9 +23,9 @@ namespace CV_storage.Core.Models
 
         public ICollection<AdditionalInformation> AdditionalInformation { get; set; } = new List<AdditionalInformation>();
 
-        public ICollection<LanguageKnowledge> LanguageKnowledges { get; set; }  = new List<LanguageKnowledge>();
-        public ICollection<Education> Educations { get; set; } = new List<Education>();
-        public ICollection<JobExperience> JobExperiences { get; set; } = new List<JobExperience>();
-        public ICollection<GainedSkill> GainedSkills { get; set; } = new List<GainedSkill>();
+        public ICollection<LanguageKnowledge> LanguageKnowledge { get; set; }  = new List<LanguageKnowledge>();
+        public ICollection<Education> Education { get; set; } = new List<Education>();
+        public ICollection<JobExperience> JobExperience { get; set; } = new List<JobExperience>();
+        public ICollection<GainedSkill> GainedSkill { get; set; } = new List<GainedSkill>();
     }
 }

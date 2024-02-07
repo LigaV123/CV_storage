@@ -12,23 +12,25 @@ namespace CV_storage_app.Controllers
     {
         private readonly IEntityService<CurriculumVitae> _cvService;
         private readonly IMapper _mapper;
-        private readonly IEnumerable<ICvValidations> _validations;
+        private readonly ICvValidations _validations;
+        private readonly IDeleteService _deleteService;
 
         public HomeController( 
             IEntityService<CurriculumVitae> cvService,
             IMapper mapper,
-            IEnumerable<ICvValidations> validations)
+            ICvValidations validations,
+            IDeleteService deleteService)
         {
             _cvService = cvService;
             _mapper = mapper;
             _validations = validations;
+            _deleteService = deleteService;
         }
 
         public IActionResult Index()
         {
-            var cvs = _cvService.Query()
-                .Include(cv => cv.LanguageKnowledges)
-                .Include(cv => cv.Educations).ToList();
+            var cvs = _cvService.Query().ToList();
+
             var cvList = new CvListViewModel
             {
                 CvItems = cvs.Select(_mapper.Map<CvItemViewModel>).ToList()
@@ -40,11 +42,7 @@ namespace CV_storage_app.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var cv = _cvService.GetById(id);
-            if (cv != null)
-            {
-                _cvService.Delete(cv);
-            }
+            _deleteService.DeleteCvById(id);
 
             return RedirectToAction("Index");
         }
@@ -52,14 +50,7 @@ namespace CV_storage_app.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var cv = _cvService.QueryById(id)
-                .Include(cv => cv.LanguageKnowledges)
-                .Include(cv => cv.Educations)
-                .Include(cv => cv.MainAddress)
-                .Include(cv => cv.JobExperiences)
-                .Include(cv => cv.GainedSkills)
-                .Include(cv => cv.AdditionalInformation)
-                .SingleOrDefault();
+            var cv = GetDetailedCvById(id);
 
             if (cv != null)
             {
@@ -82,7 +73,7 @@ namespace CV_storage_app.Controllers
         [HttpPost]
         public IActionResult Edit(CvItemViewModel cv)
         {
-            if (!_validations.All(v => v.IsValid(cv, ModelState)))
+            if (!ModelState.IsValid || !_validations.IsValid(cv, ModelState))
             {
                 return View(cv);
             }
@@ -111,7 +102,7 @@ namespace CV_storage_app.Controllers
         [HttpPost]
         public IActionResult Create(CvItemViewModel cv)
         {
-            if (!_validations.All(v => v.IsValid(cv, ModelState)))
+            if (!ModelState.IsValid || !_validations.IsValid(cv, ModelState))
             {
                 return View(cv);
             }
@@ -124,14 +115,7 @@ namespace CV_storage_app.Controllers
         [HttpGet]
         public IActionResult Print(int id)
         {
-            var cv = _cvService.QueryById(id)
-                .Include(cv => cv.LanguageKnowledges)
-                .Include(cv => cv.Educations)
-                .Include(cv => cv.MainAddress)
-                .Include(cv => cv.JobExperiences)
-                .Include(cv => cv.GainedSkills)
-                .Include(cv => cv.AdditionalInformation)
-                .SingleOrDefault();
+            var cv = GetDetailedCvById(id);
 
             return View(_mapper.Map<CvItemViewModel>(cv));
         }
@@ -145,6 +129,18 @@ namespace CV_storage_app.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private CurriculumVitae? GetDetailedCvById(int id)
+        {
+            return _cvService.QueryById(id)
+                .Include(cv => cv.LanguageKnowledge)
+                .Include(cv => cv.Education)
+                .Include(cv => cv.MainAddress)
+                .Include(cv => cv.JobExperience)
+                .Include(cv => cv.GainedSkill)
+                .Include(cv => cv.AdditionalInformation)
+                .SingleOrDefault();
         }
     }
 }
