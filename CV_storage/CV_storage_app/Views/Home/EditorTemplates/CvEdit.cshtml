@@ -1,0 +1,29 @@
+﻿@model CvItemViewModel
+
+@{
+    string display = @ViewData.ModelState.IsValid ? "none" : "block";
+}
+
+@Html.ValidationSummary(htmlAttributes:new { @class = "alert alert-danger", style=$"display:{display}"}, message: "Things you must do:")
+
+@Html.HiddenFor(m => m.Id)
+<div class="mb-3">
+    @Html.LabelFor(m => m.FirstName, "First Name")
+    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control"})
+</div>
+<div class="mb-3">
+    @Html.LabelFor(m => m.MiddleName, "Middle Name")
+    @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control"})
+</div>
+<div class="mb-3">
+    @Html.LabelFor(m => m.LastName, "Last Name")
+    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control"})
+</div>
+<div class="mb-3">
+    @Html.LabelFor(m => m.Email, "E-mail")
+    @Html.TextBoxFor(m => m.Email, new { @class = "form-control"})
+</div>
+<div class="mb-3">
+    @Html.LabelFor(m => m.PhoneNumber, "Phone Number")
+    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control"})
+</div>

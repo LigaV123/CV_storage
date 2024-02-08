@@ -1,0 +1,23 @@
+﻿@model List<AddressViewModel>
+
+@Html.HiddenFor(m => m[0].Id)
+<div class="mb-3">
+    @Html.LabelFor(m => m[0].Country, "Country")
+    @Html.TextBoxFor(m => m[0].Country, new { @class = "form-control"})
+</div>
+<div class="mb-3">
+    @Html.LabelFor(m => m[0].City, "City")
+    @Html.TextBoxFor(m => m[0].City, new { @class = "form-control"})
+</div>
+<div class="mb-3">
+    @Html.LabelFor(m => m[0].Region, "Region / State / Province")
+    @Html.TextBoxFor(m => m[0].Region, new { @class = "form-control"})
+</div>
+<div class="mb-3">
+    @Html.LabelFor(m => m[0].StreetAddress, "Street Address")
+    @Html.TextBoxFor(m => m[0].StreetAddress, new { placeholder = "Street Address, Apartment, Suite, Unit, Building, Floor, etc.", @class = "form-control"})
+</div>
+<div class="mb-3">
+    @Html.LabelFor(m => m[0].PostalCode, "Postal Code / Zip Code")
+    @Html.TextBoxFor(m => m[0].PostalCode, new { @class = "form-control"})
+</div>

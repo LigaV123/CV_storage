@@ -1,0 +1,31 @@
+﻿<script>
+    $(document).ready(function () {
+
+        function AddSectionItem(sectionName, divCount, sectionClass) {
+            
+            $(`#add-${sectionName}-item`).on("click", function () {
+                const itemCount = $(`#${sectionName}-section`).find("div.mb-3").length / divCount;
+               
+                $.get(`/${sectionClass}/Add${sectionClass}SectionItem?itemCount=${itemCount}`, function (data, status) {
+                    $(`#${sectionName}-section`).append(data);
+                })
+            })
+
+            $(`#${sectionName}-section`).on("click", `.delete-${sectionName}`, function () {
+               
+                const id = $(this).attr("id");
+                const parentId = $(this).closest(`div[id^='${sectionName}_']`).attr("id");
+                const parentDiv = $(this).closest(`#${parentId}`);
+
+                $.post(`/${sectionClass}/Delete${sectionClass}Item`, { "id": id }, function (data, status) {
+                    parentDiv.remove();
+                })
+            })
+        }
+
+        AddSectionItem("language", 2, "Language");
+        AddSectionItem("education", 8, "Education");
+        AddSectionItem("job", 6, "JobExperience");
+        AddSectionItem("skill", 3, "GainedSkill");
+    })
+</script>

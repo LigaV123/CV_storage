@@ -1,0 +1,66 @@
+﻿@using CV_storage.Core.Enums
+@model List<EducationViewModel>
+
+<div id="education-section">
+
+    @for (var i = 0; i < Model.Count; i++)
+    {
+        <div id="education_@i">
+            @Html.HiddenFor(m => m[i].Id)
+            <div class="mb-3">
+                @Html.LabelFor(m => m[i].EducationalEstablishment, "Educational Establishment")
+                @Html.TextBoxFor(m => m[i].EducationalEstablishment, new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(m => m[i].Faculty, "Faculty")
+                @Html.TextBoxFor(m => m[i].Faculty, new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(m => m[i].Department, "Department")
+                @Html.TextBoxFor(m => m[i].Department, new { @class = "form-control" })
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m[i].EducationForm, "Education Form")
+                        <select asp-for="@Model[i].EducationForm" asp-items="Html.GetEnumSelectList<StudyType>()">
+                            <option value="">Please select</option>
+                        </Select>
+                    </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m[i].Degree, "Degree Information")
+                        <select asp-for="@Model[i].Degree" asp-items="Html.GetEnumSelectList<DegreeLevel>()">
+                            <option value="">Please select</option>
+                        </Select>
+                    </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m[i].Status, "Education Status")
+                        <select asp-for="@Model[i].Status" asp-items="Html.GetEnumSelectList<EducationStatus>()">
+                            <option value="">Please select</option>
+                        </Select>
+                    </div>
+                    <button type="button" id="@Model[i].Id" class="btn btn-danger delete-education">Remove Education</button>
+                </div>
+
+                <div class="col">
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m[i].EducationStartDate, "Education Start Date")
+                        @Html.TextBoxFor(m => m[i].EducationStartDate, new { @class = "form-control", type = "date" })
+                    </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m[i].EducationEndDate, "Education End Date")
+                        @Html.TextBoxFor(m => m[i].EducationEndDate, new { @class = "form-control", type = "date" })
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4"/>
+        </div>
+    }
+
+    @if(Model.Count == 0)
+    {
+        <p class="alert alert-info">You can add education.</p>
+    }
+
+</div>

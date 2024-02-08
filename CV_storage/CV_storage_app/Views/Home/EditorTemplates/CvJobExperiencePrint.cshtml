@@ -1,0 +1,28 @@
+﻿@model List<JobExperienceViewModel>
+
+<h4><strong>Job Experience</strong></h4>
+@for (int i = 0; i < Model.Count; i++)
+{
+    <div>
+        @{
+            var endDate = String.IsNullOrEmpty(@Model[i].EmploymentEndDate) ? "" : " - " + @Model[i].EmploymentEndDate;
+            var date = $"{@Model[i].EmploymentStartDate}{endDate}";
+            var workload = @Model[i].Workload != null ? "Workload: " + @Model[i].Workload : "";
+        }
+
+        @Html.HiddenFor(m => m[i].Id)
+        <div class="row">
+            <p class="col mb-0"><strong>@Model[i].CompanyName</strong></p>
+            <p class="text-end col mb-0">@date</p>
+            <p>
+                As <em>@Model[i].Position</em><br/>
+                @Model[i].JobDescription
+            </p>
+        </div>
+    </div>
+
+    @if (i < Model.Count - 1)
+    {
+        <hr />
+    }
+}

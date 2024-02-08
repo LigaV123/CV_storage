@@ -1,0 +1,11 @@
+﻿@model List<AdditionalInformationViewModel>
+
+@Html.HiddenFor(m => m[0].Id)
+<div class="mb-3">
+    @Html.LabelFor(m => m[0].AboutYou, "About You")
+    @Html.TextAreaFor(m => m[0].AboutYou, new { @class = "form-control"})
+</div>
+<div class="mb-3">
+    @Html.LabelFor(m => m[0].HobbiesAndInterests, "Hobbies and Interests")
+    @Html.TextAreaFor(m => m[0].HobbiesAndInterests, new { @class = "form-control"})
+</div>
