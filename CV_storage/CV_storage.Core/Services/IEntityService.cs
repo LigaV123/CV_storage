@@ -12,5 +12,6 @@ namespace CV_storage.Core.Services
         void Delete(T entity);
         void Update(T entity);
         bool Exists(int id);
+        void DeleteById(int id);
     }
 }

@@ -12,5 +12,6 @@ namespace CV_storage.Core.Services
         void Delete<T>(T entity) where T : Entity;
         void Update<T>(T entity) where T : Entity;
         bool Exists<T>(int id) where T : Entity;
+        void DeleteById<T>(int id) where T : Entity;
     }
 }

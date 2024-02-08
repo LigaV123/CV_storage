@@ -56,5 +56,11 @@ namespace CV_storage.Services
         {
             return _context.Set<T>().Any(e => e.Id == id);
         }
+
+        public void DeleteById<T>(int id) where T : Entity
+        {
+            _context.Remove(_context.Set<T>().SingleOrDefault(e => e.Id == id));
+            _context.SaveChanges();
+        }
     }
 }

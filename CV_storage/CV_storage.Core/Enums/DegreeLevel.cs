@@ -1,6 +1,6 @@
 ﻿namespace CV_storage.Core.Enums
 {
-    public enum DegreeInformation
+    public enum DegreeLevel
     {
         Certificate = 1,
         Diploma = 2,

@@ -13,8 +13,8 @@ namespace CV_storage.Core.Models
 
         [MaxLength(500)] 
         public string? Department { get; set; }
-        public FormOfEducation? EducationForm { get; set; }
-        public DegreeInformation Degree { get; set; }
+        public StudyType? EducationForm { get; set; }
+        public DegreeLevel Degree { get; set; }
         public EducationStatus Status { get; set; }
 
         [MaxLength(10)] 

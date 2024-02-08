@@ -10,14 +10,38 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CV_storage.Data.Migrations
 {
     [DbContext(typeof(CvDbContext))]
-    [Migration("20240118152431_JobExperianceAndSkillsAdded")]
-    partial class JobExperianceAndSkillsAdded
+    [Migration("20240208171000_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.14");
+
+            modelBuilder.Entity("CV_storage.Core.Models.AdditionalInformation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AboutYou")
+                        .HasMaxLength(1875)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("CurriculumVitaeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("HobbiesAndInterests")
+                        .HasMaxLength(1875)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurriculumVitaeId");
+
+                    b.ToTable("AdditionalInformation");
+                });
 
             modelBuilder.Entity("CV_storage.Core.Models.Address", b =>
                 {
@@ -50,8 +74,7 @@ namespace CV_storage.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurriculumVitaeId")
-                        .IsUnique();
+                    b.HasIndex("CurriculumVitaeId");
 
                     b.ToTable("Address");
                 });
@@ -188,7 +211,7 @@ namespace CV_storage.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Workload")
+                    b.Property<int?>("Workload")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -221,11 +244,22 @@ namespace CV_storage.Data.Migrations
                     b.ToTable("LanguageKnowledge");
                 });
 
+            modelBuilder.Entity("CV_storage.Core.Models.AdditionalInformation", b =>
+                {
+                    b.HasOne("CV_storage.Core.Models.CurriculumVitae", "CurriculumVitae")
+                        .WithMany("AdditionalInformation")
+                        .HasForeignKey("CurriculumVitaeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CurriculumVitae");
+                });
+
             modelBuilder.Entity("CV_storage.Core.Models.Address", b =>
                 {
                     b.HasOne("CV_storage.Core.Models.CurriculumVitae", "CurriculumVitae")
-                        .WithOne("MainAddress")
-                        .HasForeignKey("CV_storage.Core.Models.Address", "CurriculumVitaeId")
+                        .WithMany("MainAddress")
+                        .HasForeignKey("CurriculumVitaeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -235,7 +269,7 @@ namespace CV_storage.Data.Migrations
             modelBuilder.Entity("CV_storage.Core.Models.Education", b =>
                 {
                     b.HasOne("CV_storage.Core.Models.CurriculumVitae", "CurriculumVitae")
-                        .WithMany("Educations")
+                        .WithMany("Education")
                         .HasForeignKey("CurriculumVitaeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -246,7 +280,7 @@ namespace CV_storage.Data.Migrations
             modelBuilder.Entity("CV_storage.Core.Models.GainedSkill", b =>
                 {
                     b.HasOne("CV_storage.Core.Models.CurriculumVitae", "CurriculumVitae")
-                        .WithMany("GainedSkills")
+                        .WithMany("GainedSkill")
                         .HasForeignKey("CurriculumVitaeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -257,7 +291,7 @@ namespace CV_storage.Data.Migrations
             modelBuilder.Entity("CV_storage.Core.Models.JobExperience", b =>
                 {
                     b.HasOne("CV_storage.Core.Models.CurriculumVitae", "CurriculumVitae")
-                        .WithMany("JobExperiences")
+                        .WithMany("JobExperience")
                         .HasForeignKey("CurriculumVitaeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -268,7 +302,7 @@ namespace CV_storage.Data.Migrations
             modelBuilder.Entity("CV_storage.Core.Models.LanguageKnowledge", b =>
                 {
                     b.HasOne("CV_storage.Core.Models.CurriculumVitae", "CurriculumVitae")
-                        .WithMany("LanguageKnowledges")
+                        .WithMany("LanguageKnowledge")
                         .HasForeignKey("CurriculumVitaeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -278,13 +312,15 @@ namespace CV_storage.Data.Migrations
 
             modelBuilder.Entity("CV_storage.Core.Models.CurriculumVitae", b =>
                 {
-                    b.Navigation("Educations");
+                    b.Navigation("AdditionalInformation");
 
-                    b.Navigation("GainedSkills");
+                    b.Navigation("Education");
 
-                    b.Navigation("JobExperiences");
+                    b.Navigation("GainedSkill");
 
-                    b.Navigation("LanguageKnowledges");
+                    b.Navigation("JobExperience");
+
+                    b.Navigation("LanguageKnowledge");
 
                     b.Navigation("MainAddress");
                 });

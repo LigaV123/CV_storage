@@ -1,4 +1,5 @@
-﻿using CV_storage.Core.Services;
+﻿using CV_storage.Core.Models;
+using CV_storage.Core.Services;
 using CV_storage_app.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,11 +7,11 @@ namespace CV_storage_app.Controllers
 {
     public class JobExperienceController : Controller
     {
-        private readonly IDeleteService _deleteService;
+        private readonly IEntityService<JobExperience> _jobService;
 
-        public JobExperienceController(IDeleteService deleteService)
+        public JobExperienceController(IEntityService<JobExperience> jobService)
         {
-            _deleteService = deleteService;
+            _jobService = jobService;
         }
 
         [HttpGet]
@@ -27,7 +28,10 @@ namespace CV_storage_app.Controllers
         [HttpPost]
         public IActionResult DeleteJobExperienceItem(int id)
         {
-            _deleteService.DeleteJobById(id);
+            if (id > 0)
+            {
+                _jobService.DeleteById(id);
+            }
 
             return Ok();
         }

@@ -1,4 +1,5 @@
-﻿using CV_storage.Core.Services;
+﻿using CV_storage.Core.Models;
+using CV_storage.Core.Services;
 using CV_storage_app.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,11 +7,11 @@ namespace CV_storage_app.Controllers
 {
     public class LanguageController : Controller
     {
-        private readonly IDeleteService _deleteService;
+        private readonly IEntityService<LanguageKnowledge> _languageService;
 
-        public LanguageController(IDeleteService deleteService)
+        public LanguageController(IEntityService<LanguageKnowledge> languageService)
         {
-            _deleteService = deleteService;
+            _languageService = languageService;
         }
 
         [HttpGet]
@@ -27,7 +28,10 @@ namespace CV_storage_app.Controllers
         [HttpPost]
         public IActionResult DeleteLanguageItem(int id)
         {
-            _deleteService.DeleteLanguageById(id);
+            if (id > 0)
+            {
+                _languageService.DeleteById(id);
+            }
 
             return Ok();
         }

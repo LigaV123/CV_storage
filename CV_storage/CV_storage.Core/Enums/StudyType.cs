@@ -1,6 +1,6 @@
 ﻿namespace CV_storage.Core.Enums
 {
-    public enum FormOfEducation
+    public enum StudyType
     {
         FullTime = 1,
         PartTime = 2,

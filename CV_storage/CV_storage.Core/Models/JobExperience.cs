@@ -10,7 +10,7 @@ namespace CV_storage.Core.Models
 
         [MaxLength(500)]
         public string? Position { get; set; }
-        public AmountOfLabor? Workload { get; set; }
+        public WorkLoad? Workload { get; set; }
 
         [MaxLength(1875)] //approximate character count in one A4 page is 1875 chars
         public string? JobDescription { get; set; }

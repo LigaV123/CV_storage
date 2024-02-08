@@ -21,7 +21,7 @@
             </div>
             <div class="mb-3">
                 @Html.LabelFor(m => m[i].Workload, "Workload")
-                <select asp-for="@Model[i].Workload" asp-items="Html.GetEnumSelectList<AmountOfLabor>()">
+                <select asp-for="@Model[i].Workload" asp-items="Html.GetEnumSelectList<WorkLoad>()">
                     <option value="">Please select</option>
                 </Select>
             </div>

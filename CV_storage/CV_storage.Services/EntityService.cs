@@ -49,5 +49,10 @@ namespace CV_storage.Services
         {
             return Exists<T>(id);
         }
+
+        public void DeleteById(int id)
+        {
+            DeleteById<T>(id);
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace CV_storage_app.Models
         public int Id { get; set; }
         public string? CompanyName { get; set; }
         public string? Position { get; set; }
-        public AmountOfLabor? Workload { get; set; }
+        public WorkLoad? Workload { get; set; }
         public string? JobDescription { get; set; }
         public string? EmploymentStartDate { get; set; }
         public string? EmploymentEndDate { get; set; }

@@ -13,18 +13,15 @@ namespace CV_storage_app.Controllers
         private readonly IEntityService<CurriculumVitae> _cvService;
         private readonly IMapper _mapper;
         private readonly ICvValidations _validations;
-        private readonly IDeleteService _deleteService;
 
         public HomeController( 
             IEntityService<CurriculumVitae> cvService,
             IMapper mapper,
-            ICvValidations validations,
-            IDeleteService deleteService)
+            ICvValidations validations)
         {
             _cvService = cvService;
             _mapper = mapper;
             _validations = validations;
-            _deleteService = deleteService;
         }
 
         public IActionResult Index()
@@ -42,7 +39,7 @@ namespace CV_storage_app.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _deleteService.DeleteCvById(id);
+            _cvService.DeleteById(id);
 
             return RedirectToAction("Index");
         }
